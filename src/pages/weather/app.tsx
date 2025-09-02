@@ -75,21 +75,21 @@ export function App() {
       try {
         setLoading(true);
         setError(null);
-        
+
         // Sydney coordinates
         const latitude = -33.8688;
         const longitude = 151.2093;
-        
+
         const response = await fetch(
-          `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,precipitation,wind_speed_10m,weather_code&hourly=temperature_2m,precipitation,wind_speed_10m,weather_code&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max,weather_code&timezone=Australia/Sydney`
+          `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,precipitation,wind_speed_10m,weather_code&hourly=temperature_2m,precipitation,wind_speed_10m,weather_code&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max,weather_code&timezone=Australia/Sydney`,
         );
-        
+
         if (!response.ok) {
           throw new Error(`Weather API error: ${response.status}`);
         }
-        
+
         const data = await response.json();
-        
+
         setWeatherData({
           current: {
             temperature: Math.round(data.current.temperature_2m),
@@ -142,13 +142,7 @@ export function App() {
         navigationHide
         toolsHide
         content={
-          <ContentLayout
-            header={
-              <Header variant="h1">
-                Weather Dashboard - Sydney
-              </Header>
-            }
-          >
+          <ContentLayout header={<Header variant="h1">Weather Dashboard - Sydney</Header>}>
             <Container>
               <StatusIndicator type="loading">Loading weather data...</StatusIndicator>
             </Container>
@@ -164,13 +158,7 @@ export function App() {
         navigationHide
         toolsHide
         content={
-          <ContentLayout
-            header={
-              <Header variant="h1">
-                Weather Dashboard - Sydney
-              </Header>
-            }
-          >
+          <ContentLayout header={<Header variant="h1">Weather Dashboard - Sydney</Header>}>
             <Alert type="error" header="Failed to load weather data">
               {error}
             </Alert>
