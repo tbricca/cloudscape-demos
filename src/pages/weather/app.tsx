@@ -60,7 +60,7 @@ const weatherCodeDescriptions: Record<number, { description: string; icon: strin
   80: { description: 'Slight rain showers', icon: '🌦️' },
   81: { description: 'Moderate rain showers', icon: '🌦️' },
   82: { description: 'Violent rain showers', icon: '🌦️' },
-  95: { description: 'Thunderstorm', icon: '⛈️' },
+  95: { description: 'Thunderstorm', icon: '���️' },
   96: { description: 'Thunderstorm with hail', icon: '⛈️' },
   99: { description: 'Thunderstorm with heavy hail', icon: '⛈️' },
 };
@@ -348,10 +348,6 @@ export function App() {
                 items={hourlyForecastItems}
                 loadingText="Loading forecast"
                 trackBy="time"
-                pagination={{
-                  currentPageIndex: 1,
-                  pagesCount: 1,
-                }}
                 empty={
                   <Box textAlign="center" color="inherit">
                     <Box variant="strong" textAlign="center" color="inherit">
