@@ -13,6 +13,7 @@ import Cards from '@cloudscape-design/components/cards';
 import Link from '@cloudscape-design/components/link';
 import StatusIndicator from '@cloudscape-design/components/status-indicator';
 import Badge from '@cloudscape-design/components/badge';
+import Button from '@cloudscape-design/components/button';
 import { format } from 'date-fns';
 
 import '../../styles/base.scss';
@@ -50,6 +51,25 @@ function weatherCodeToText(code: number): string {
   if (code === 95) return 'Thunderstorm';
   if ([96, 99].includes(code)) return 'Thunderstorm with hail';
   return 'Unknown';
+}
+
+function weatherCodeToEmoji(code: number): string {
+  if (code === 0) return '☀️';
+  if ([1].includes(code)) return '🌤️';
+  if ([2].includes(code)) return '⛅';
+  if (code === 3) return '☁️';
+  if ([45, 48].includes(code)) return '🌫️';
+  if ([51, 53, 55].includes(code)) return '🌦️';
+  if ([56, 57].includes(code)) return '🥶🌦️';
+  if ([61, 63, 65].includes(code)) return '🌧️';
+  if ([66, 67].includes(code)) return '🥶🌧️';
+  if ([71, 73, 75].includes(code)) return '🌨️';
+  if (code === 77) return '❄️';
+  if ([80, 81, 82].includes(code)) return '🌦️';
+  if ([85, 86].includes(code)) return '❄️';
+  if (code === 95) return '⛈️';
+  if ([96, 99].includes(code)) return '⛈️';
+  return '🌈';
 }
 
 async function geocode(name: string): Promise<GeoResult[]> {
@@ -157,7 +177,27 @@ export function App() {
       toolsHide
       content={
         <ContentLayout
-          header={<Header variant="h1">Weather Dashboard</Header>}
+          header={
+            <Header
+              variant="h1"
+              actions={
+                <Button
+                  iconName="angle-left"
+                  onClick={() => {
+                    if (window.history.length > 1) {
+                      window.history.back();
+                    } else {
+                      window.location.href = '/';
+                    }
+                  }}
+                >
+                  Back
+                </Button>
+              }
+            >
+              Weather Dashboard
+            </Header>
+          }
         >
           <SpaceBetween size="l">
             <Container
@@ -191,6 +231,26 @@ export function App() {
               </SpaceBetween>
             </Container>
 
+            <Container header={<Header>Today's forecast</Header>}>
+              {loading && <StatusIndicator type="loading">Loading forecast</StatusIndicator>}
+              {error && <StatusIndicator type="error">{error}</StatusIndicator>}
+              {!loading && !error && forecast && forecast.length > 0 && (
+                <Box>
+                  <SpaceBetween size="s">
+                    <Box fontWeight="bold">
+                      {weatherCodeToEmoji(forecast[0].weathercode)} {format(new Date(forecast[0].date), 'EEEE, MMM d')}
+                    </Box>
+                    <Box variant="p">{weatherCodeToText(forecast[0].weathercode)}</Box>
+                    <Box variant="p">High: {Math.round(forecast[0].max)}°C</Box>
+                    <Box variant="p">Low: {Math.round(forecast[0].min)}°C</Box>
+                  </SpaceBetween>
+                </Box>
+              )}
+              {!loading && !error && (!forecast || forecast.length === 0) && (
+                <Box variant="p">No data</Box>
+              )}
+            </Container>
+
             <Container header={<Header counter={headerCounter}>7-day forecast</Header>}>
               {loading && <StatusIndicator type="loading">Loading forecast</StatusIndicator>}
               {error && <StatusIndicator type="error">{error}</StatusIndicator>}
@@ -214,7 +274,7 @@ export function App() {
                   ]}
                   items={forecast.map(d => ({
                     id: d.date,
-                    title: format(new Date(d.date), 'EEE, MMM d'),
+                    title: `${weatherCodeToEmoji(d.weathercode)} ${format(new Date(d.date), 'EEE, MMM d')}`,
                     description: (
                       <SpaceBetween size="xs">
                         <Box variant="p">{weatherCodeToText(d.weathercode)}</Box>
