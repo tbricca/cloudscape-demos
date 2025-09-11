@@ -91,11 +91,7 @@ async function geocode(name: string): Promise<GeoResult[]> {
 }
 
 async function fetchForecast(lat: number, lon: number): Promise<ForecastDay[]> {
-  const daily = [
-    'temperature_2m_max',
-    'temperature_2m_min',
-    'weathercode',
-  ].join(',');
+  const daily = ['temperature_2m_max', 'temperature_2m_min', 'weathercode'].join(',');
   const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=${daily}&forecast_days=7&timezone=auto`;
   const res = await fetch(url);
   if (!res.ok) throw new Error('Failed to fetch forecast');
@@ -200,9 +196,7 @@ export function App() {
           }
         >
           <SpaceBetween size="l">
-            <Container
-              header={<Header description="Search for a city to view the 7-day forecast">Location</Header>}
-            >
+            <Container header={<Header description="Search for a city to view the 7-day forecast">Location</Header>}>
               <SpaceBetween size="s">
                 <Autosuggest
                   onChange={({ detail }) => setQuery(detail.value)}
@@ -223,7 +217,12 @@ export function App() {
                 />
                 {selected ? (
                   <Box variant="p">
-                    Selected: <Badge color="blue">{selected.name}{selected.admin1 ? `, ${selected.admin1}` : ''}{selected.country ? `, ${selected.country}` : ''}</Badge>
+                    Selected:{' '}
+                    <Badge color="blue">
+                      {selected.name}
+                      {selected.admin1 ? `, ${selected.admin1}` : ''}
+                      {selected.country ? `, ${selected.country}` : ''}
+                    </Badge>
                   </Box>
                 ) : (
                   <StatusIndicator type="pending">Choose a location</StatusIndicator>
@@ -246,9 +245,7 @@ export function App() {
                   </SpaceBetween>
                 </Box>
               )}
-              {!loading && !error && (!forecast || forecast.length === 0) && (
-                <Box variant="p">No data</Box>
-              )}
+              {!loading && !error && (!forecast || forecast.length === 0) && <Box variant="p">No data</Box>}
             </Container>
 
             <Container header={<Header counter={headerCounter}>7-day forecast</Header>}>
@@ -262,9 +259,7 @@ export function App() {
                   }}
                   cardDefinition={{
                     header: item => <Box fontWeight="bold">{item.title}</Box>,
-                    sections: [
-                      { id: 'desc', content: item => item.description },
-                    ],
+                    sections: [{ id: 'desc', content: item => item.description }],
                   }}
                   cardsPerRow={[
                     { cards: 1, minWidth: 0 },
@@ -294,9 +289,7 @@ export function App() {
                   header={<Header variant="h2">Daily outlook</Header>}
                 />
               )}
-              {!loading && !error && !forecast && (
-                <Box variant="p">No data</Box>
-              )}
+              {!loading && !error && !forecast && <Box variant="p">No data</Box>}
             </Container>
           </SpaceBetween>
         </ContentLayout>
