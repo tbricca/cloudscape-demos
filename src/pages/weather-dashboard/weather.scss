@@ -1,0 +1,189 @@
+.temp-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.weather-detail {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.forecast-scroll-container {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 1rem 0.5rem;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-border-divider-default, #e9ebed);
+    border-radius: 4px;
+
+    &:hover {
+      background: var(--color-border-control-default, #d1d5db);
+    }
+  }
+}
+
+.forecast-card {
+  min-width: 240px;
+  max-width: 240px;
+  padding: 1.5rem;
+  border: 1px solid var(--color-border-container-divider, #e9ebed);
+  border-radius: 8px;
+  background: var(--color-background-container-content, #ffffff);
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+}
+
+.forecast-card-header {
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--color-border-divider-default, #e9ebed);
+}
+
+.forecast-card-body {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.forecast-card-details {
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border-divider-default, #e9ebed);
+}
+
+.weather-icon {
+  display: inline-block;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+.weather-sunny {
+  animation-name: sunny-pulse;
+}
+
+.weather-partly-cloudy {
+  animation-name: drift;
+}
+
+.weather-cloudy {
+  animation-name: drift;
+}
+
+.weather-rainy {
+  animation-name: rain-bounce;
+}
+
+.weather-stormy {
+  animation-name: storm-shake;
+}
+
+.weather-snowy {
+  animation-name: snow-fall;
+}
+
+.weather-foggy {
+  animation-name: foggy-fade;
+}
+
+.weather-default {
+  animation: none;
+}
+
+@keyframes sunny-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(8px);
+  }
+}
+
+@keyframes rain-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-4px);
+  }
+  50% {
+    transform: translateY(2px);
+  }
+  75% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes storm-shake {
+  0%,
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-4px) rotate(-2deg);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(4px) rotate(2deg);
+  }
+}
+
+@keyframes snow-fall {
+  0% {
+    transform: translateY(-4px);
+  }
+  50% {
+    transform: translateY(4px);
+  }
+  100% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes foggy-fade {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
