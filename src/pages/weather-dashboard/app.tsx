@@ -10,6 +10,8 @@ import { CustomAppLayout } from '../commons/common-components';
 import { WeatherContent } from './components/weather-content';
 import { WeatherHeader } from './components/weather-header';
 
+import './weather.scss';
+
 export function App() {
   const [toolsOpen, setToolsOpen] = useState(false);
   const [toolsContent, setToolsContent] = useState<React.ReactNode>(null);
