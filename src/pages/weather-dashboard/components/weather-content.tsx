@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from 'react';
 
 import Box from '@cloudscape-design/components/box';
-import Cards from '@cloudscape-design/components/cards';
+import Button from '@cloudscape-design/components/button';
+import ButtonGroup from '@cloudscape-design/components/button-group';
 import Container from '@cloudscape-design/components/container';
 import Grid from '@cloudscape-design/components/grid';
 import Header from '@cloudscape-design/components/header';
@@ -40,35 +41,37 @@ interface DayForecast {
   windSpeed: number;
 }
 
-const weatherCodeDescriptions: Record<number, { description: string; icon: string }> = {
-  0: { description: 'Clear sky', icon: '☀️' },
-  1: { description: 'Mainly clear', icon: '🌤️' },
-  2: { description: 'Partly cloudy', icon: '⛅' },
-  3: { description: 'Overcast', icon: '☁️' },
-  45: { description: 'Foggy', icon: '🌫️' },
-  48: { description: 'Depositing rime fog', icon: '🌫️' },
-  51: { description: 'Light drizzle', icon: '🌦️' },
-  53: { description: 'Moderate drizzle', icon: '🌦️' },
-  55: { description: 'Dense drizzle', icon: '🌧️' },
-  61: { description: 'Slight rain', icon: '🌧️' },
-  63: { description: 'Moderate rain', icon: '🌧️' },
-  65: { description: 'Heavy rain', icon: '⛈️' },
-  71: { description: 'Slight snow', icon: '🌨️' },
-  73: { description: 'Moderate snow', icon: '❄️' },
-  75: { description: 'Heavy snow', icon: '❄️' },
-  77: { description: 'Snow grains', icon: '❄️' },
-  80: { description: 'Slight rain showers', icon: '🌦️' },
-  81: { description: 'Moderate rain showers', icon: '🌧️' },
-  82: { description: 'Violent rain showers', icon: '⛈️' },
-  85: { description: 'Slight snow showers', icon: '🌨️' },
-  86: { description: 'Heavy snow showers', icon: '❄️' },
-  95: { description: 'Thunderstorm', icon: '⛈️' },
-  96: { description: 'Thunderstorm with hail', icon: '⛈️' },
-  99: { description: 'Thunderstorm with heavy hail', icon: '⛈️' },
+type TempUnit = 'F' | 'C';
+
+const weatherCodeDescriptions: Record<number, { description: string; icon: string; animation: string }> = {
+  0: { description: 'Clear sky', icon: '☀️', animation: 'sunny' },
+  1: { description: 'Mainly clear', icon: '🌤️', animation: 'partly-cloudy' },
+  2: { description: 'Partly cloudy', icon: '⛅', animation: 'partly-cloudy' },
+  3: { description: 'Overcast', icon: '☁️', animation: 'cloudy' },
+  45: { description: 'Foggy', icon: '🌫️', animation: 'foggy' },
+  48: { description: 'Depositing rime fog', icon: '🌫️', animation: 'foggy' },
+  51: { description: 'Light drizzle', icon: '🌦️', animation: 'rainy' },
+  53: { description: 'Moderate drizzle', icon: '🌦️', animation: 'rainy' },
+  55: { description: 'Dense drizzle', icon: '🌧️', animation: 'rainy' },
+  61: { description: 'Slight rain', icon: '🌧️', animation: 'rainy' },
+  63: { description: 'Moderate rain', icon: '🌧️', animation: 'rainy' },
+  65: { description: 'Heavy rain', icon: '⛈️', animation: 'stormy' },
+  71: { description: 'Slight snow', icon: '🌨️', animation: 'snowy' },
+  73: { description: 'Moderate snow', icon: '❄️', animation: 'snowy' },
+  75: { description: 'Heavy snow', icon: '❄️', animation: 'snowy' },
+  77: { description: 'Snow grains', icon: '❄️', animation: 'snowy' },
+  80: { description: 'Slight rain showers', icon: '🌦️', animation: 'rainy' },
+  81: { description: 'Moderate rain showers', icon: '🌧️', animation: 'rainy' },
+  82: { description: 'Violent rain showers', icon: '⛈️', animation: 'stormy' },
+  85: { description: 'Slight snow showers', icon: '🌨️', animation: 'snowy' },
+  86: { description: 'Heavy snow showers', icon: '❄️', animation: 'snowy' },
+  95: { description: 'Thunderstorm', icon: '⛈️', animation: 'stormy' },
+  96: { description: 'Thunderstorm with hail', icon: '⛈️', animation: 'stormy' },
+  99: { description: 'Thunderstorm with heavy hail', icon: '⛈️', animation: 'stormy' },
 };
 
 function getWeatherInfo(code: number) {
-  return weatherCodeDescriptions[code] || { description: 'Unknown', icon: '❓' };
+  return weatherCodeDescriptions[code] || { description: 'Unknown', icon: '❓', animation: 'default' };
 }
 
 function formatDate(dateString: string): { date: string; dayName: string } {
@@ -91,11 +94,23 @@ function formatDate(dateString: string): { date: string; dayName: string } {
   return { date: dateString, dayName };
 }
 
+function fahrenheitToCelsius(temp: number): number {
+  return Math.round(((temp - 32) * 5) / 9);
+}
+
+function convertTemp(temp: number, unit: TempUnit, fromFahrenheit: boolean = true): number {
+  if (unit === 'F') {
+    return temp;
+  }
+  return fromFahrenheit ? fahrenheitToCelsius(temp) : temp;
+}
+
 export function WeatherContent() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [forecast, setForecast] = useState<DayForecast[]>([]);
   const [currentTemp, setCurrentTemp] = useState<number | null>(null);
+  const [tempUnit, setTempUnit] = useState<TempUnit>('F');
 
   useEffect(() => {
     async function fetchWeather() {
@@ -173,99 +188,96 @@ export function WeatherContent() {
   return (
     <SpaceBetween size="l">
       {currentTemp !== null && (
-        <Container>
-          <SpaceBetween size="s">
-            <Header variant="h2">Current Weather</Header>
-            <Grid gridDefinition={[{ colspan: { default: 12, xs: 6 } }, { colspan: { default: 12, xs: 6 } }]}>
-              <Box fontSize="display-l" fontWeight="bold">
-                {currentTemp}°F
-              </Box>
-              <Box variant="p" color="text-body-secondary">
-                {forecast[0] && getWeatherInfo(forecast[0].weatherCode).description}
-              </Box>
-            </Grid>
-          </SpaceBetween>
+        <Container
+          header={
+            <Header
+              variant="h2"
+              actions={
+                <ButtonGroup
+                  items={[
+                    { text: '°F', id: 'F', pressed: tempUnit === 'F' },
+                    { text: '°C', id: 'C', pressed: tempUnit === 'C' },
+                  ]}
+                  onItemClick={({ detail }) => setTempUnit(detail.id as TempUnit)}
+                />
+              }
+            >
+              Current Weather
+            </Header>
+          }
+        >
+          <Grid gridDefinition={[{ colspan: { default: 12, xs: 6 } }, { colspan: { default: 12, xs: 6 } }]}>
+            <Box fontSize="display-l" fontWeight="bold">
+              {convertTemp(currentTemp, tempUnit)}°{tempUnit}
+            </Box>
+            <Box variant="p" color="text-body-secondary">
+              {forecast[0] && getWeatherInfo(forecast[0].weatherCode).description}
+            </Box>
+          </Grid>
         </Container>
       )}
 
-      <Cards
-        cardDefinition={{
-          header: item => (
-            <SpaceBetween size="xxs">
-              <Box variant="h3">{item.dayName}</Box>
-              <Box fontSize="body-s" color="text-body-secondary">
-                {new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-              </Box>
-            </SpaceBetween>
-          ),
-          sections: [
-            {
-              id: 'weather',
-              content: item => (
-                <Box textAlign="center" padding={{ vertical: 's' }}>
-                  <Box fontSize="display-l" padding={{ bottom: 'xs' }}>
-                    {getWeatherInfo(item.weatherCode).icon}
+      <Container header={<Header variant="h2">7-Day Forecast</Header>}>
+        <div className="forecast-scroll-container">
+          {forecast.map(item => {
+            const weatherInfo = getWeatherInfo(item.weatherCode);
+            return (
+              <div key={item.date} className="forecast-card">
+                <div className="forecast-card-header">
+                  <Box variant="h3" fontSize="heading-m">
+                    {item.dayName}
                   </Box>
-                  <Box variant="p" color="text-body-secondary">
-                    {getWeatherInfo(item.weatherCode).description}
+                  <Box fontSize="body-s" color="text-body-secondary">
+                    {new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                   </Box>
-                </Box>
-              ),
-            },
-            {
-              id: 'temperature',
-              content: item => (
-                <SpaceBetween size="xs">
-                  <div className="temp-row">
-                    <Box variant="span" color="text-body-secondary">
-                      High:
-                    </Box>
-                    <Box variant="span" fontWeight="bold">
-                      {item.maxTemp}°F
-                    </Box>
+                </div>
+
+                <div className="forecast-card-body">
+                  <div className={`weather-icon weather-${weatherInfo.animation}`}>
+                    <Box fontSize="display-l">{weatherInfo.icon}</Box>
                   </div>
-                  <div className="temp-row">
-                    <Box variant="span" color="text-body-secondary">
-                      Low:
-                    </Box>
-                    <Box variant="span" fontWeight="bold">
-                      {item.minTemp}°F
-                    </Box>
-                  </div>
-                </SpaceBetween>
-              ),
-            },
-            {
-              id: 'details',
-              content: item => (
-                <SpaceBetween size="xs">
-                  <div className="weather-detail">
-                    <Icon name="trending-up" variant="subtle" />
-                    <Box variant="span" fontSize="body-s">
-                      Wind: {item.windSpeed} mph
-                    </Box>
-                  </div>
-                  <div className="weather-detail">
-                    <Icon name="status-info" variant="subtle" />
-                    <Box variant="span" fontSize="body-s">
-                      Precip: {item.precipitation}"
-                    </Box>
-                  </div>
-                </SpaceBetween>
-              ),
-            },
-          ],
-        }}
-        cardsPerRow={[
-          { cards: 1, minWidth: 0 },
-          { cards: 2, minWidth: 600 },
-          { cards: 3, minWidth: 900 },
-          { cards: 4, minWidth: 1200 },
-        ]}
-        items={forecast}
-        trackBy="date"
-        header={<Header variant="h2">7-Day Forecast</Header>}
-      />
+                  <Box variant="p" color="text-body-secondary" textAlign="center" padding={{ top: 'xs' }}>
+                    {weatherInfo.description}
+                  </Box>
+                </div>
+
+                <div className="forecast-card-details">
+                  <SpaceBetween size="xs">
+                    <div className="temp-row">
+                      <Box variant="span" color="text-body-secondary">
+                        High:
+                      </Box>
+                      <Box variant="span" fontWeight="bold">
+                        {convertTemp(item.maxTemp, tempUnit)}°{tempUnit}
+                      </Box>
+                    </div>
+                    <div className="temp-row">
+                      <Box variant="span" color="text-body-secondary">
+                        Low:
+                      </Box>
+                      <Box variant="span" fontWeight="bold">
+                        {convertTemp(item.minTemp, tempUnit)}°{tempUnit}
+                      </Box>
+                    </div>
+                    <div className="weather-detail">
+                      <Icon name="trending-up" variant="subtle" />
+                      <Box variant="span" fontSize="body-s">
+                        Wind: {item.windSpeed} mph
+                      </Box>
+                    </div>
+                    <div className="weather-detail">
+                      <Icon name="status-info" variant="subtle" />
+                      <Box variant="span" fontSize="body-s">
+                        Precip: {item.precipitation}"
+                      </Box>
+                    </div>
+                  </SpaceBetween>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </Container>
     </SpaceBetween>
   );
 }
