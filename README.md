@@ -42,8 +42,6 @@ npm run preview
 
 ### Run Tests
 
-
-
 ```
 npm test
 ```
