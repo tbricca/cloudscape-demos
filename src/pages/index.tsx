@@ -188,18 +188,18 @@ export default function Home() {
                       Create new dashboard
                     </Button>
                   </SpaceBetween>
-                  <Box textAlign="center" padding={{ top: 'xl' }}>
-                    <img 
-                      src="https://cdn.builder.io/api/v1/image/assets%2Fc5b47d20f6a943e485717e5895739988%2F6756eeeef8ab4c40a5a532cd42c054cf" 
-                      alt="Analytics dashboard visualization" 
-                      style={{ 
-                        width: '100%', 
-                        height: 'auto', 
-                        maxHeight: '220px', 
+                  <Box>
+                    <img
+                      src="https://cdn.builder.io/api/v1/image/assets%2Fc5b47d20f6a943e485717e5895739988%2F6756eeeef8ab4c40a5a532cd42c054cf"
+                      alt="Analytics dashboard visualization"
+                      style={{
+                        width: '100%',
+                        height: 'auto',
+                        maxHeight: '220px',
                         objectFit: 'cover',
                         borderRadius: '8px',
                         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
-                      }} 
+                      }}
                     />
                   </Box>
                 </Grid>
