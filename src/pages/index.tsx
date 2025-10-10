@@ -158,6 +158,19 @@ export default function Home() {
         <ContentLayout
           header={
             <SpaceBetween size="m">
+              <Flashbar
+                items={[
+                  {
+                    type: 'success',
+                    content:
+                      'All systems operational. Your infrastructure is running smoothly with 99.9% uptime this month.',
+                    dismissible: true,
+                    buttonText: 'View metrics',
+                    onButtonClick: () => window.location.href = '/dashboard',
+                  },
+                ]}
+              />
+
               <Container>
                 <Grid gridDefinition={[{ colspan: { default: 12, s: 7, m: 7, l: 8 } }, { colspan: { default: 12, s: 5, m: 5, l: 4 } }]}>
                   <SpaceBetween size="m">
@@ -177,7 +190,7 @@ export default function Home() {
                   </SpaceBetween>
                   <Box textAlign="center" padding={{ top: 'xl' }}>
                     <img 
-                      src="https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=800&h=500&fit=crop" 
+                      src="https://cdn.builder.io/api/v1/image/assets%2Fc5b47d20f6a943e485717e5895739988%2F6756eeeef8ab4c40a5a532cd42c054cf" 
                       alt="Analytics dashboard visualization" 
                       style={{ 
                         width: '100%', 
@@ -191,19 +204,6 @@ export default function Home() {
                   </Box>
                 </Grid>
               </Container>
-
-              <Flashbar
-                items={[
-                  {
-                    type: 'success',
-                    content:
-                      'All systems operational. Your infrastructure is running smoothly with 99.9% uptime this month.',
-                    dismissible: true,
-                    buttonText: 'View metrics',
-                    onButtonClick: () => window.location.href = '/dashboard',
-                  },
-                ]}
-              />
             </SpaceBetween>
           }
         >
@@ -304,11 +304,6 @@ export default function Home() {
                     pageLabel: pageNumber => `Page ${pageNumber} of all pages`,
                   }}
                 />
-              }
-              header={
-                <Header counter={filteredDashboards.length > 0 ? `(${filteredDashboards.length})` : undefined}>
-                  Available Applications
-                </Header>
               }
             />
           </SpaceBetween>
