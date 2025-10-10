@@ -21,15 +21,30 @@ import Link from '@cloudscape-design/components/link';
 
 // Dashboard and application definitions with category information
 const dashboards = [
-  { route: '/cards', title: 'Card View', description: 'Comprehensive card-based data visualization and management.', category: 'Components' },
-  { route: '/chat', title: 'Chat Interface', description: 'Real-time chat and collaboration platform.', category: 'Applications' },
+  {
+    route: '/cards',
+    title: 'Card View',
+    description: 'Comprehensive card-based data visualization and management.',
+    category: 'Components',
+  },
+  {
+    route: '/chat',
+    title: 'Chat Interface',
+    description: 'Real-time chat and collaboration platform.',
+    category: 'Applications',
+  },
   {
     route: '/configurable-dashboard',
     title: 'Configurable Dashboard',
     description: 'Customizable dashboard with dynamic widget management.',
     category: 'Dashboards',
   },
-  { route: '/dashboard', title: 'Service Dashboard', description: 'Operational service monitoring and metrics overview.', category: 'Dashboards' },
+  {
+    route: '/dashboard',
+    title: 'Service Dashboard',
+    description: 'Operational service monitoring and metrics overview.',
+    category: 'Dashboards',
+  },
   {
     route: '/delete-one-click',
     title: 'Quick Delete',
@@ -48,33 +63,78 @@ const dashboards = [
     description: 'Resource deletion with confirmation dialog.',
     category: 'Forms',
   },
-  { route: '/details', title: 'Resource Details', description: 'Comprehensive resource information and management.', category: 'Details' },
-  { route: '/details-hub', title: 'Details Hub', description: 'Centralized resource details and insights.', category: 'Details' },
-  { route: '/details-tabs', title: 'Tabbed Details', description: 'Multi-section resource details view.', category: 'Details' },
-  { route: '/edit', title: 'Resource Editor', description: 'Advanced resource configuration and editing.', category: 'Forms' },
-  { route: '/form', title: 'Resource Creation', description: 'Single-page resource creation workflow.', category: 'Forms' },
+  {
+    route: '/details',
+    title: 'Resource Details',
+    description: 'Comprehensive resource information and management.',
+    category: 'Details',
+  },
+  {
+    route: '/details-hub',
+    title: 'Details Hub',
+    description: 'Centralized resource details and insights.',
+    category: 'Details',
+  },
+  {
+    route: '/details-tabs',
+    title: 'Tabbed Details',
+    description: 'Multi-section resource details view.',
+    category: 'Details',
+  },
+  {
+    route: '/edit',
+    title: 'Resource Editor',
+    description: 'Advanced resource configuration and editing.',
+    category: 'Forms',
+  },
+  {
+    route: '/form',
+    title: 'Resource Creation',
+    description: 'Single-page resource creation workflow.',
+    category: 'Forms',
+  },
   {
     route: '/form-unsaved-changes',
     title: 'Change Protection',
     description: 'Unsaved changes detection and protection.',
     category: 'Forms',
   },
-  { route: '/form-validation', title: 'Form Validation', description: 'Real-time form validation and error handling.', category: 'Forms' },
-  { route: '/manage-tags', title: 'Tag Manager', description: 'Resource tagging and organization system.', category: 'Components' },
+  {
+    route: '/form-validation',
+    title: 'Form Validation',
+    description: 'Real-time form validation and error handling.',
+    category: 'Forms',
+  },
+  {
+    route: '/manage-tags',
+    title: 'Tag Manager',
+    description: 'Resource tagging and organization system.',
+    category: 'Components',
+  },
   {
     route: '/non-console',
     title: 'Application Navigation',
     description: 'Public-facing application navigation.',
     category: 'Navigation',
   },
-  { route: '/onboarding', title: 'User Onboarding', description: 'Interactive user onboarding and tutorials.', category: 'Onboarding' },
+  {
+    route: '/onboarding',
+    title: 'User Onboarding',
+    description: 'Interactive user onboarding and tutorials.',
+    category: 'Onboarding',
+  },
   {
     route: '/product-detail-page',
     title: 'Product Details',
     description: 'Complete product information and specifications.',
     category: 'Applications',
   },
-  { route: '/read-from-s3', title: 'S3 Data Reader', description: 'Amazon S3 data retrieval and visualization.', category: 'Integration' },
+  {
+    route: '/read-from-s3',
+    title: 'S3 Data Reader',
+    description: 'Amazon S3 data retrieval and visualization.',
+    category: 'Integration',
+  },
   {
     route: '/server-side-table',
     title: 'Server Table',
@@ -93,15 +153,30 @@ const dashboards = [
     description: 'Side-by-side resource comparison panel.',
     category: 'Panels',
   },
-  { route: '/split-panel-multiple', title: 'Multi-Panel View', description: 'Multiple split panel layout.', category: 'Panels' },
-  { route: '/table', title: 'Data Table', description: 'Advanced data table with sorting and filtering.', category: 'Tables' },
+  {
+    route: '/split-panel-multiple',
+    title: 'Multi-Panel View',
+    description: 'Multiple split panel layout.',
+    category: 'Panels',
+  },
+  {
+    route: '/table',
+    title: 'Data Table',
+    description: 'Advanced data table with sorting and filtering.',
+    category: 'Tables',
+  },
   {
     route: '/table-date-filter',
     title: 'Time-Series Table',
     description: 'Data table with date range filtering.',
     category: 'Tables',
   },
-  { route: '/table-editable', title: 'Editable Table', description: 'Inline table editing and data management.', category: 'Tables' },
+  {
+    route: '/table-editable',
+    title: 'Editable Table',
+    description: 'Inline table editing and data management.',
+    category: 'Tables',
+  },
   {
     route: '/table-expandable',
     title: 'Expandable Table',
@@ -127,7 +202,12 @@ const dashboards = [
     category: 'Tables',
   },
   { route: '/wizard', title: 'Setup Wizard', description: 'Multi-step configuration wizard.', category: 'Forms' },
-  { route: '/write-to-s3', title: 'S3 Data Writer', description: 'Amazon S3 data upload and storage.', category: 'Integration' },
+  {
+    route: '/write-to-s3',
+    title: 'S3 Data Writer',
+    description: 'Amazon S3 data upload and storage.',
+    category: 'Integration',
+  },
 ];
 
 // Get unique categories
@@ -148,7 +228,10 @@ export default function Home() {
   );
 
   // Paginate the filtered dashboards
-  const paginatedDashboards = filteredDashboards.slice((currentPageIndex - 1) * itemsPerPage, currentPageIndex * itemsPerPage);
+  const paginatedDashboards = filteredDashboards.slice(
+    (currentPageIndex - 1) * itemsPerPage,
+    currentPageIndex * itemsPerPage,
+  );
 
   return (
     <AppLayout
@@ -166,22 +249,24 @@ export default function Home() {
                       'All systems operational. Your infrastructure is running smoothly with 99.9% uptime this month.',
                     dismissible: true,
                     buttonText: 'View metrics',
-                    onButtonClick: () => window.location.href = '/dashboard',
+                    onButtonClick: () => (window.location.href = '/dashboard'),
                   },
                 ]}
               />
 
               <Container>
-                <Grid gridDefinition={[{ colspan: { default: 12, s: 7, m: 7, l: 8 } }, { colspan: { default: 12, s: 5, m: 5, l: 4 } }]}>
+                <Grid
+                  gridDefinition={[
+                    { colspan: { default: 12, s: 7, m: 7, l: 8 } },
+                    { colspan: { default: 12, s: 5, m: 5, l: 4 } },
+                  ]}
+                >
                   <SpaceBetween size="m">
-                    <Header
-                      variant="h1"
-                      description="Production-grade cloud application patterns and interfaces"
-                    >
+                    <Header variant="h1" description="Production-grade cloud application patterns and interfaces">
                       Dashboard Hub
                     </Header>
                     <Box variant="p" color="text-body-secondary">
-                      Access powerful, enterprise-ready dashboards and tools designed for modern cloud operations. 
+                      Access powerful, enterprise-ready dashboards and tools designed for modern cloud operations.
                       Monitor services, manage resources, and gain actionable insights across your infrastructure.
                     </Box>
                     <Button variant="primary" iconAlign="right" iconName="add-plus">
@@ -199,7 +284,7 @@ export default function Home() {
                         objectFit: 'cover',
                         objectPosition: 'top',
                         borderRadius: '8px',
-                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
+                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
                       }}
                     />
                   </Box>
@@ -212,8 +297,8 @@ export default function Home() {
             <Container>
               <Box variant="h2">Application Catalog</Box>
               <Box variant="p" padding={{ bottom: 'm' }}>
-                Explore {dashboards.length} production-ready applications and dashboards. Each solution is built with enterprise 
-                best practices for scalability, security, and user experience.
+                Explore {dashboards.length} production-ready applications and dashboards. Each solution is built with
+                enterprise best practices for scalability, security, and user experience.
               </Box>
 
               <Grid gridDefinition={[{ colspan: { default: 12, xs: 12, s: 12, m: 8, l: 8, xl: 8 } }]}>
