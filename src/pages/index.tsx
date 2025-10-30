@@ -166,7 +166,7 @@ export default function Home() {
                   </Button>
                 }
               >
-                Cloudscape Design System Demos
+                <span style={{ textDecoration: 'underline' }}>Cloudscape Design System Demos</span>
               </Header>
 
               <Flashbar
