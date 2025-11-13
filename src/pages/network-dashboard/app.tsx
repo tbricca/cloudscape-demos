@@ -39,7 +39,7 @@ export function App() {
   // Generate dynamic data for Credit Usage chart
   const generateCreditData = () => {
     const days = ['x1', 'x2', 'x3', 'x4', 'x5'];
-    return days.map((day) => ({
+    return days.map(day => ({
       x: day,
       y: Math.floor(Math.random() * 200) + 100,
     }));
@@ -71,8 +71,8 @@ export function App() {
     setRefreshKey(refreshKey + 1);
   };
 
-  const filteredDevices = devices.filter((device) =>
-    Object.values(device).some((value) => value.toLowerCase().includes(filteringText.toLowerCase()))
+  const filteredDevices = devices.filter(device =>
+    Object.values(device).some(value => value.toLowerCase().includes(filteringText.toLowerCase())),
   );
 
   const paginatedDevices = filteredDevices.slice((currentPageIndex - 1) * 5, currentPageIndex * 5);
@@ -165,15 +165,15 @@ export function App() {
                     {
                       title: 'Site 1',
                       type: 'area',
-                      data: networkData.map((d) => ({ x: d.x, y: d.y1 })),
+                      data: networkData.map(d => ({ x: d.x, y: d.y1 })),
                     },
                     {
                       title: 'Site 2',
                       type: 'area',
-                      data: networkData.map((d) => ({ x: d.x, y: d.y2 })),
+                      data: networkData.map(d => ({ x: d.x, y: d.y2 })),
                     },
                   ]}
-                  xDomain={networkData.map((d) => d.x)}
+                  xDomain={networkData.map(d => d.x)}
                   yDomain={[0, 100]}
                   i18nStrings={{
                     filterLabel: 'Filter displayed data',
@@ -181,8 +181,8 @@ export function App() {
                     filterSelectedAriaLabel: 'selected',
                     legendAriaLabel: 'Legend',
                     chartAriaRoleDescription: 'area chart',
-                    xTickFormatter: (value) => value,
-                    yTickFormatter: (value) => `${value}`,
+                    xTickFormatter: value => value,
+                    yTickFormatter: value => `${value}`,
                   }}
                   ariaLabel="Network traffic area chart"
                   height={300}
@@ -224,7 +224,7 @@ export function App() {
                       data: creditData,
                     },
                   ]}
-                  xDomain={creditData.map((d) => d.x)}
+                  xDomain={creditData.map(d => d.x)}
                   yDomain={[0, 300]}
                   i18nStrings={{
                     filterLabel: 'Filter displayed data',
@@ -232,8 +232,8 @@ export function App() {
                     filterSelectedAriaLabel: 'selected',
                     legendAriaLabel: 'Legend',
                     chartAriaRoleDescription: 'bar chart',
-                    xTickFormatter: (value) => value,
-                    yTickFormatter: (value) => `${value}`,
+                    xTickFormatter: value => value,
+                    yTickFormatter: value => `${value}`,
                   }}
                   ariaLabel="Credit usage bar chart"
                   height={300}
@@ -278,37 +278,37 @@ export function App() {
                 {
                   id: 'name',
                   header: 'Device Name',
-                  cell: (item) => item.name,
+                  cell: item => item.name,
                   sortingField: 'name',
                 },
                 {
                   id: 'type',
                   header: 'Type',
-                  cell: (item) => item.type,
+                  cell: item => item.type,
                   sortingField: 'type',
                 },
                 {
                   id: 'ipAddress',
                   header: 'IP Address',
-                  cell: (item) => item.ipAddress,
+                  cell: item => item.ipAddress,
                   sortingField: 'ipAddress',
                 },
                 {
                   id: 'status',
                   header: 'Status',
-                  cell: (item) => item.status,
+                  cell: item => item.status,
                   sortingField: 'status',
                 },
                 {
                   id: 'location',
                   header: 'Location',
-                  cell: (item) => item.location,
+                  cell: item => item.location,
                   sortingField: 'location',
                 },
                 {
                   id: 'lastSeen',
                   header: 'Last Seen',
-                  cell: (item) => item.lastSeen,
+                  cell: item => item.lastSeen,
                 },
               ]}
               items={paginatedDevices}
