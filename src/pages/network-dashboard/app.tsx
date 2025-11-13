@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: MIT-0
 import React, { useState } from 'react';
 
-import AppLayout from '@cloudscape-design/components/app-layout';
 import BreadcrumbGroup from '@cloudscape-design/components/breadcrumb-group';
 import Button from '@cloudscape-design/components/button';
 import Flashbar from '@cloudscape-design/components/flashbar';
@@ -18,7 +17,6 @@ import TextFilter from '@cloudscape-design/components/text-filter';
 import Pagination from '@cloudscape-design/components/pagination';
 import CollectionPreferences from '@cloudscape-design/components/collection-preferences';
 import TopNavigation from '@cloudscape-design/components/top-navigation';
-import Icon from '@cloudscape-design/components/icon';
 
 import { CustomAppLayout } from '../commons/common-components';
 
@@ -85,33 +83,16 @@ export function App() {
         identity={{
           href: '#',
           title: 'Service name',
-          logo: {
-            src: '',
-            alt: 'Logo',
-          },
         }}
         utilities={[
           {
             type: 'button',
-            text: 'Link',
-            href: '#',
-            external: true,
-            externalIconAriaLabel: ' (opens in a new tab)',
-          },
-          {
-            type: 'button',
             iconName: 'notification',
-            title: 'Notifications',
-            ariaLabel: 'Notifications (unread)',
+            ariaLabel: 'Notifications',
             badge: true,
-            disableUtilityCollapse: false,
+            disableUtilityCollapse: true,
           },
-          {
-            type: 'button',
-            iconName: 'settings',
-            title: 'Settings',
-            ariaLabel: 'Settings',
-          },
+          { type: 'button', iconName: 'settings', title: 'Settings', ariaLabel: 'Settings' },
           {
             type: 'menu-dropdown',
             text: 'Customer name',
@@ -121,21 +102,6 @@ export function App() {
               { id: 'profile', text: 'Profile' },
               { id: 'preferences', text: 'Preferences' },
               { id: 'security', text: 'Security' },
-              {
-                id: 'support-group',
-                text: 'Support',
-                items: [
-                  {
-                    id: 'documentation',
-                    text: 'Documentation',
-                    href: '#',
-                    external: true,
-                    externalIconAriaLabel: ' (opens in new tab)',
-                  },
-                  { id: 'support', text: 'Support' },
-                  { id: 'feedback', text: 'Feedback' },
-                ],
-              },
               { id: 'signout', text: 'Sign out' },
             ],
           },
