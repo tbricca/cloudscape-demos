@@ -71,7 +71,7 @@ const App = () => {
     device =>
       device.name.toLowerCase().includes(filteringText.toLowerCase()) ||
       device.ip.includes(filteringText) ||
-      device.type.toLowerCase().includes(filteringText.toLowerCase())
+      device.type.toLowerCase().includes(filteringText.toLowerCase()),
   );
 
   const paginatedDevices = filteredDevices.slice((currentPageIndex - 1) * 5, currentPageIndex * 5);
@@ -190,12 +190,7 @@ const App = () => {
               />
             )}
 
-            <Grid
-              gridDefinition={[
-                { colspan: { default: 12, xs: 6 } },
-                { colspan: { default: 12, xs: 6 } },
-              ]}
-            >
+            <Grid gridDefinition={[{ colspan: { default: 12, xs: 6 } }, { colspan: { default: 12, xs: 6 } }]}>
               <Container>
                 <SpaceBetween size="l">
                   <Box variant="h2" fontSize="heading-m" fontWeight="bold">
