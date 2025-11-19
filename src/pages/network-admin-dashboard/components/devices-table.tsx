@@ -33,18 +33,126 @@ export function DevicesTable({ filteringText: externalFilteringText, currentPage
   const [selectedItems, setSelectedItems] = useState<Device[]>([]);
   const [filteringText, setFilteringText] = useState('');
   const [items, setItems] = useState<Device[]>([
-    { id: '1', column1: 'Cell Value', column2: 'Cell Value', column3: 'Cell Value', column4: 'Cell Value', column5: 'Cell Value', column6: 'Cell Value', column7: 'Cell Value' },
-    { id: '2', column1: 'Cell Value', column2: 'Cell Value', column3: 'Cell Value', column4: 'Cell Value', column5: 'Cell Value', column6: 'Cell Value', column7: 'Cell Value' },
-    { id: '3', column1: 'Cell Value', column2: 'Cell Value', column3: 'Cell Value', column4: 'Cell Value', column5: 'Cell Value', column6: 'Cell Value', column7: 'Cell Value' },
-    { id: '4', column1: 'Cell Value', column2: 'Cell Value', column3: 'Cell Value', column4: 'Cell Value', column5: 'Cell Value', column6: 'Cell Value', column7: 'Cell Value' },
-    { id: '5', column1: 'Cell Value', column2: 'Cell Value', column3: 'Cell Value', column4: 'Cell Value', column5: 'Cell Value', column6: 'Cell Value', column7: 'Cell Value' },
-    { id: '6', column1: 'Cell Value', column2: 'Cell Value', column3: 'Cell Value', column4: 'Cell Value', column5: 'Cell Value', column6: 'Cell Value', column7: 'Cell Value' },
-    { id: '7', column1: 'Cell Value', column2: 'Cell Value', column3: 'Cell Value', column4: 'Cell Value', column5: 'Cell Value', column6: 'Cell Value', column7: 'Cell Value' },
-    { id: '8', column1: 'Cell Value', column2: 'Cell Value', column3: 'Cell Value', column4: 'Cell Value', column5: 'Cell Value', column6: 'Cell Value', column7: 'Cell Value' },
-    { id: '9', column1: 'Cell Value', column2: 'Cell Value', column3: 'Cell Value', column4: 'Cell Value', column5: 'Cell Value', column6: 'Cell Value', column7: 'Cell Value' },
-    { id: '10', column1: 'Cell Value', column2: 'Cell Value', column3: 'Cell Value', column4: 'Cell Value', column5: 'Cell Value', column6: 'Cell Value', column7: 'Cell Value' },
-    { id: '11', column1: 'Cell Value', column2: 'Cell Value', column3: 'Cell Value', column4: 'Cell Value', column5: 'Cell Value', column6: 'Cell Value', column7: 'Cell Value' },
-    { id: '12', column1: 'Cell Value', column2: 'Cell Value', column3: 'Cell Value', column4: 'Cell Value', column5: 'Cell Value', column6: 'Cell Value', column7: 'Cell Value' },
+    {
+      id: '1',
+      column1: 'Cell Value',
+      column2: 'Cell Value',
+      column3: 'Cell Value',
+      column4: 'Cell Value',
+      column5: 'Cell Value',
+      column6: 'Cell Value',
+      column7: 'Cell Value',
+    },
+    {
+      id: '2',
+      column1: 'Cell Value',
+      column2: 'Cell Value',
+      column3: 'Cell Value',
+      column4: 'Cell Value',
+      column5: 'Cell Value',
+      column6: 'Cell Value',
+      column7: 'Cell Value',
+    },
+    {
+      id: '3',
+      column1: 'Cell Value',
+      column2: 'Cell Value',
+      column3: 'Cell Value',
+      column4: 'Cell Value',
+      column5: 'Cell Value',
+      column6: 'Cell Value',
+      column7: 'Cell Value',
+    },
+    {
+      id: '4',
+      column1: 'Cell Value',
+      column2: 'Cell Value',
+      column3: 'Cell Value',
+      column4: 'Cell Value',
+      column5: 'Cell Value',
+      column6: 'Cell Value',
+      column7: 'Cell Value',
+    },
+    {
+      id: '5',
+      column1: 'Cell Value',
+      column2: 'Cell Value',
+      column3: 'Cell Value',
+      column4: 'Cell Value',
+      column5: 'Cell Value',
+      column6: 'Cell Value',
+      column7: 'Cell Value',
+    },
+    {
+      id: '6',
+      column1: 'Cell Value',
+      column2: 'Cell Value',
+      column3: 'Cell Value',
+      column4: 'Cell Value',
+      column5: 'Cell Value',
+      column6: 'Cell Value',
+      column7: 'Cell Value',
+    },
+    {
+      id: '7',
+      column1: 'Cell Value',
+      column2: 'Cell Value',
+      column3: 'Cell Value',
+      column4: 'Cell Value',
+      column5: 'Cell Value',
+      column6: 'Cell Value',
+      column7: 'Cell Value',
+    },
+    {
+      id: '8',
+      column1: 'Cell Value',
+      column2: 'Cell Value',
+      column3: 'Cell Value',
+      column4: 'Cell Value',
+      column5: 'Cell Value',
+      column6: 'Cell Value',
+      column7: 'Cell Value',
+    },
+    {
+      id: '9',
+      column1: 'Cell Value',
+      column2: 'Cell Value',
+      column3: 'Cell Value',
+      column4: 'Cell Value',
+      column5: 'Cell Value',
+      column6: 'Cell Value',
+      column7: 'Cell Value',
+    },
+    {
+      id: '10',
+      column1: 'Cell Value',
+      column2: 'Cell Value',
+      column3: 'Cell Value',
+      column4: 'Cell Value',
+      column5: 'Cell Value',
+      column6: 'Cell Value',
+      column7: 'Cell Value',
+    },
+    {
+      id: '11',
+      column1: 'Cell Value',
+      column2: 'Cell Value',
+      column3: 'Cell Value',
+      column4: 'Cell Value',
+      column5: 'Cell Value',
+      column6: 'Cell Value',
+      column7: 'Cell Value',
+    },
+    {
+      id: '12',
+      column1: 'Cell Value',
+      column2: 'Cell Value',
+      column3: 'Cell Value',
+      column4: 'Cell Value',
+      column5: 'Cell Value',
+      column6: 'Cell Value',
+      column7: 'Cell Value',
+    },
   ]);
 
   const [editingCell, setEditingCell] = useState<{ rowId: string; columnId: string } | null>(null);
@@ -80,11 +188,7 @@ export function DevicesTable({ filteringText: externalFilteringText, currentPage
   const handleCellSave = () => {
     if (editingCell) {
       setItems(prevItems =>
-        prevItems.map(item =>
-          item.id === editingCell.rowId
-            ? { ...item, [editingCell.columnId]: editValue }
-            : item
-        )
+        prevItems.map(item => (item.id === editingCell.rowId ? { ...item, [editingCell.columnId]: editValue } : item)),
       );
       setEditingCell(null);
       setEditValue('');
@@ -97,9 +201,7 @@ export function DevicesTable({ filteringText: externalFilteringText, currentPage
   };
 
   const filteredItems = items.filter(item =>
-    Object.values(item).some(value =>
-      value.toLowerCase().includes(filteringText.toLowerCase())
-    )
+    Object.values(item).some(value => value.toLowerCase().includes(filteringText.toLowerCase())),
   );
 
   const columnDefinitions: TableProps.ColumnDefinition<Device>[] = [

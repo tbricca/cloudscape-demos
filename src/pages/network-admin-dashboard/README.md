@@ -5,17 +5,20 @@ An interactive and fully editable dashboard for monitoring network traffic, cred
 ## Features
 
 ### 1. **Network Traffic Chart (Area Chart)**
+
 - Displays two data series: Site 1 and Site 2
 - Shows performance goal threshold line
 - **Editable**: Click "Randomize Data" button to generate new random data
 - Responsive and interactive visualization
 
 ### 2. **Credit Usage Chart (Bar Chart)**
+
 - Displays credit usage across 5 time periods
 - **Editable**: Click "Randomize Data" button to generate new random data
 - Visual representation with blue bars
 
 ### 3. **My Devices Table**
+
 - Displays device information in a multi-column table
 - **Fully Editable**:
   - Click on any cell to edit its value
@@ -32,6 +35,7 @@ An interactive and fully editable dashboard for monitoring network traffic, cred
   - Settings button for additional options
 
 ### 4. **Dashboard Controls**
+
 - Breadcrumb navigation (Service > Administrative Dashboard)
 - Warning message banner (dismissible)
 - "Refresh Data" button in the main header
@@ -78,6 +82,6 @@ The dashboard is accessible at `/network-admin-dashboard` route and is listed in
 ✅ Filter devices with search  
 ✅ Dismiss warning banner  
 ✅ Sort table columns  
-✅ Multi-select table rows  
+✅ Multi-select table rows
 
 The dashboard provides a complete example of an interactive, data-driven admin interface using AWS Cloudscape Design System components.
