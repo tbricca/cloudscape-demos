@@ -61,47 +61,7 @@ export function App() {
               <CreditUsageChart />
             </Grid>
 
-            <Container
-              header={
-                <Header
-                  variant="h2"
-                  description="Devices on your local network"
-                  actions={
-                    <Button variant="primary" iconName="external">
-                      Add Device
-                    </Button>
-                  }
-                >
-                  My Devices
-                </Header>
-              }
-            >
-              <SpaceBetween size="m">
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <TextFilter
-                    filteringText={filteringText}
-                    filteringPlaceholder="Placeholder"
-                    onChange={({ detail }) => setFilteringText(detail.filteringText)}
-                  />
-                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <Pagination
-                      currentPageIndex={currentPage}
-                      onChange={({ detail }) => setCurrentPage(detail.currentPageIndex)}
-                      pagesCount={5}
-                    />
-                    <div
-                      style={{
-                        width: '2px',
-                        height: '32px',
-                        background: 'var(--color-border-divider-default)',
-                      }}
-                    />
-                    <Button variant="icon" iconName="settings" />
-                  </div>
-                </div>
-                <DevicesTable filteringText={filteringText} />
-              </SpaceBetween>
-            </Container>
+            <DevicesTable filteringText={filteringText} currentPage={currentPage} onPageChange={setCurrentPage} />
           </SpaceBetween>
         </ContentLayout>
       }

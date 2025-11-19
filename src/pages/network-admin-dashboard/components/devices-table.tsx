@@ -4,6 +4,12 @@ import React, { useState } from 'react';
 import Table from '@cloudscape-design/components/table';
 import Box from '@cloudscape-design/components/box';
 import Input from '@cloudscape-design/components/input';
+import Container from '@cloudscape-design/components/container';
+import Header from '@cloudscape-design/components/header';
+import Button from '@cloudscape-design/components/button';
+import SpaceBetween from '@cloudscape-design/components/space-between';
+import TextFilter from '@cloudscape-design/components/text-filter';
+import Pagination from '@cloudscape-design/components/pagination';
 import { TableProps } from '@cloudscape-design/components/table';
 
 interface Device {
@@ -19,9 +25,11 @@ interface Device {
 
 interface DevicesTableProps {
   filteringText: string;
+  currentPage: number;
+  onPageChange: (page: number) => void;
 }
 
-export function DevicesTable({ filteringText }: DevicesTableProps) {
+export function DevicesTable({ filteringText, currentPage, onPageChange }: DevicesTableProps) {
   const [selectedItems, setSelectedItems] = useState<Device[]>([]);
   const [items, setItems] = useState<Device[]>([
     { id: '1', column1: 'Cell Value', column2: 'Cell Value', column3: 'Cell Value', column4: 'Cell Value', column5: 'Cell Value', column6: 'Cell Value', column7: 'Cell Value' },
@@ -40,6 +48,28 @@ export function DevicesTable({ filteringText }: DevicesTableProps) {
 
   const [editingCell, setEditingCell] = useState<{ rowId: string; columnId: string } | null>(null);
   const [editValue, setEditValue] = useState('');
+
+  const addDevice = () => {
+    const newId = (items.length + 1).toString();
+    setItems([
+      ...items,
+      {
+        id: newId,
+        column1: 'New Device',
+        column2: 'Cell Value',
+        column3: 'Cell Value',
+        column4: 'Cell Value',
+        column5: 'Cell Value',
+        column6: 'Cell Value',
+        column7: 'Cell Value',
+      },
+    ]);
+  };
+
+  const removeDevices = () => {
+    setItems(items.filter(item => !selectedItems.includes(item)));
+    setSelectedItems([]);
+  };
 
   const handleCellEdit = (rowId: string, columnId: string, currentValue: string) => {
     setEditingCell({ rowId, columnId });
@@ -252,21 +282,65 @@ export function DevicesTable({ filteringText }: DevicesTableProps) {
   ];
 
   return (
-    <Table
-      columnDefinitions={columnDefinitions}
-      items={filteredItems}
-      selectionType="multi"
-      selectedItems={selectedItems}
-      onSelectionChange={({ detail }) => setSelectedItems(detail.selectedItems)}
-      sortingDisabled={false}
-      empty={
-        <Box textAlign="center" color="inherit">
-          <b>No devices</b>
-          <Box padding={{ bottom: 's' }} variant="p" color="inherit">
-            No devices to display.
-          </Box>
-        </Box>
+    <Container
+      header={
+        <Header
+          variant="h2"
+          description="Devices on your local network"
+          counter={`(${filteredItems.length})`}
+          actions={
+            <SpaceBetween size="xs" direction="horizontal">
+              <Button disabled={selectedItems.length === 0} onClick={removeDevices}>
+                Remove
+              </Button>
+              <Button variant="primary" iconName="external" onClick={addDevice}>
+                Add Device
+              </Button>
+            </SpaceBetween>
+          }
+        >
+          My Devices
+        </Header>
       }
-    />
+    >
+      <SpaceBetween size="m">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Box>
+            <TextFilter filteringText="" filteringPlaceholder="Placeholder" onChange={() => {}} />
+          </Box>
+          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+            <Pagination
+              currentPageIndex={currentPage}
+              onChange={({ detail }) => onPageChange(detail.currentPageIndex)}
+              pagesCount={5}
+            />
+            <div
+              style={{
+                width: '2px',
+                height: '32px',
+                background: 'var(--color-border-divider-default)',
+              }}
+            />
+            <Button variant="icon" iconName="settings" />
+          </div>
+        </div>
+        <Table
+          columnDefinitions={columnDefinitions}
+          items={filteredItems}
+          selectionType="multi"
+          selectedItems={selectedItems}
+          onSelectionChange={({ detail }) => setSelectedItems(detail.selectedItems)}
+          sortingDisabled={false}
+          empty={
+            <Box textAlign="center" color="inherit">
+              <b>No devices</b>
+              <Box padding={{ bottom: 's' }} variant="p" color="inherit">
+                No devices to display.
+              </Box>
+            </Box>
+          }
+        />
+      </SpaceBetween>
+    </Container>
   );
 }
