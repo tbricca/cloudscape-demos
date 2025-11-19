@@ -2,8 +2,11 @@
 // SPDX-License-Identifier: MIT-0
 import React, { useState } from 'react';
 import Container from '@cloudscape-design/components/container';
+import Header from '@cloudscape-design/components/header';
 import AreaChart from '@cloudscape-design/components/area-chart';
 import Box from '@cloudscape-design/components/box';
+import Button from '@cloudscape-design/components/button';
+import SpaceBetween from '@cloudscape-design/components/space-between';
 
 export function NetworkTrafficChart() {
   const [data, setData] = useState([
@@ -21,8 +24,29 @@ export function NetworkTrafficChart() {
     { x: 'x12', y1: 3.8, y2: 5.8 },
   ]);
 
+  const generateRandomData = () => {
+    const newData = Array.from({ length: 12 }, (_, i) => ({
+      x: `x${i + 1}`,
+      y1: Math.random() * 5 + 2,
+      y2: Math.random() * 5 + 4,
+    }));
+    setData(newData);
+  };
+
   return (
-    <Container>
+    <Container
+      header={
+        <Header
+          actions={
+            <SpaceBetween size="xs" direction="horizontal">
+              <Button onClick={generateRandomData}>Randomize Data</Button>
+            </SpaceBetween>
+          }
+        >
+          Network traffic
+        </Header>
+      }
+    >
       <AreaChart
         series={[
           {

@@ -2,8 +2,11 @@
 // SPDX-License-Identifier: MIT-0
 import React, { useState } from 'react';
 import Container from '@cloudscape-design/components/container';
+import Header from '@cloudscape-design/components/header';
 import BarChart from '@cloudscape-design/components/bar-chart';
 import Box from '@cloudscape-design/components/box';
+import Button from '@cloudscape-design/components/button';
+import SpaceBetween from '@cloudscape-design/components/space-between';
 
 export function CreditUsageChart() {
   const [data, setData] = useState([
@@ -14,8 +17,28 @@ export function CreditUsageChart() {
     { x: 'x5', y: 210 },
   ]);
 
+  const generateRandomData = () => {
+    const newData = Array.from({ length: 5 }, (_, i) => ({
+      x: `x${i + 1}`,
+      y: Math.floor(Math.random() * 250) + 50,
+    }));
+    setData(newData);
+  };
+
   return (
-    <Container>
+    <Container
+      header={
+        <Header
+          actions={
+            <SpaceBetween size="xs" direction="horizontal">
+              <Button onClick={generateRandomData}>Randomize Data</Button>
+            </SpaceBetween>
+          }
+        >
+          Credit Usage
+        </Header>
+      }
+    >
       <BarChart
         series={[
           {
