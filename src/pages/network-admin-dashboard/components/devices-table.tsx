@@ -29,8 +29,9 @@ interface DevicesTableProps {
   onPageChange: (page: number) => void;
 }
 
-export function DevicesTable({ filteringText, currentPage, onPageChange }: DevicesTableProps) {
+export function DevicesTable({ filteringText: externalFilteringText, currentPage, onPageChange }: DevicesTableProps) {
   const [selectedItems, setSelectedItems] = useState<Device[]>([]);
+  const [filteringText, setFilteringText] = useState('');
   const [items, setItems] = useState<Device[]>([
     { id: '1', column1: 'Cell Value', column2: 'Cell Value', column3: 'Cell Value', column4: 'Cell Value', column5: 'Cell Value', column6: 'Cell Value', column7: 'Cell Value' },
     { id: '2', column1: 'Cell Value', column2: 'Cell Value', column3: 'Cell Value', column4: 'Cell Value', column5: 'Cell Value', column6: 'Cell Value', column7: 'Cell Value' },
@@ -306,7 +307,11 @@ export function DevicesTable({ filteringText, currentPage, onPageChange }: Devic
       <SpaceBetween size="m">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Box>
-            <TextFilter filteringText="" filteringPlaceholder="Placeholder" onChange={() => {}} />
+            <TextFilter
+              filteringText={filteringText}
+              filteringPlaceholder="Placeholder"
+              onChange={({ detail }) => setFilteringText(detail.filteringText)}
+            />
           </Box>
           <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
             <Pagination
