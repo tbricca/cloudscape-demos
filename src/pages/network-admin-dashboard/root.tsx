@@ -3,6 +3,8 @@
 import React from 'react';
 import { App } from './app';
 
-export default function Root() {
+import '../../styles/base.scss';
+
+export default function NetworkAdminDashboard() {
   return <App />;
 }
