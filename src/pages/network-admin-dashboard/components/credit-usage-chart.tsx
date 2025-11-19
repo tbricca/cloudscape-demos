@@ -52,7 +52,6 @@ export function CreditUsageChart() {
         yDomain={[0, 300]}
         height={300}
         xTitle="Day"
-        yTitle="Credit Usage"
         ariaLabel="Credit usage bar chart"
         empty={
           <Box textAlign="center" color="inherit">

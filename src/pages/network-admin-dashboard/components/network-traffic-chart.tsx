@@ -72,7 +72,6 @@ export function NetworkTrafficChart() {
         yDomain={[0, 8]}
         height={300}
         xTitle="Day"
-        yTitle="Network traffic"
         ariaLabel="Network traffic area chart"
         empty={
           <Box textAlign="center" color="inherit">
