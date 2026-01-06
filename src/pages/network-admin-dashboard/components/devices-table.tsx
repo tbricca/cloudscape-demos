@@ -41,6 +41,8 @@ export default function DevicesTable() {
   const [filteringText, setFilteringText] = useState('');
   const [currentPageIndex, setCurrentPageIndex] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const [sortingColumn, setSortingColumn] = useState<any>({ sortingField: 'name' });
+  const [isDescending, setIsDescending] = useState(false);
 
   const allDevices = generateDevices();
   const filteredDevices = allDevices.filter(
@@ -51,7 +53,20 @@ export default function DevicesTable() {
       device.type.toLowerCase().includes(filteringText.toLowerCase())
   );
 
-  const paginatedDevices = filteredDevices.slice(
+  // Sort devices based on sorting column
+  const sortedDevices = [...filteredDevices].sort((a, b) => {
+    const field = sortingColumn.sortingField as keyof Device;
+    if (!field) return 0;
+
+    const aValue = a[field];
+    const bValue = b[field];
+
+    if (aValue < bValue) return isDescending ? 1 : -1;
+    if (aValue > bValue) return isDescending ? -1 : 1;
+    return 0;
+  });
+
+  const paginatedDevices = sortedDevices.slice(
     (currentPageIndex - 1) * pageSize,
     currentPageIndex * pageSize
   );
@@ -105,6 +120,12 @@ export default function DevicesTable() {
       trackBy="id"
       selectedItems={selectedItems}
       onSelectionChange={({ detail }) => setSelectedItems(detail.selectedItems)}
+      sortingColumn={sortingColumn}
+      sortingDescending={isDescending}
+      onSortingChange={({ detail }) => {
+        setSortingColumn(detail.sortingColumn);
+        setIsDescending(detail.isDescending || false);
+      }}
       empty={
         <Box textAlign="center" color="inherit">
           <Box padding={{ bottom: 's' }} variant="p" color="inherit">

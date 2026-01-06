@@ -7,17 +7,20 @@ import BarChart from '@cloudscape-design/components/bar-chart';
 import Box from '@cloudscape-design/components/box';
 
 export default function CreditUsageChart() {
+  // Generate slightly randomized data for interactive feel
+  const generateData = () => {
+    const baseData = [45, 63, 52, 30, 51];
+    return baseData.map((val, i) => ({
+      x: `x${i + 1}`,
+      y: val + Math.floor(Math.random() * 10 - 5),
+    }));
+  };
+
   const series = [
     {
       title: 'Site 1',
       type: 'bar' as const,
-      data: [
-        { x: 'x1', y: 45 },
-        { x: 'x2', y: 63 },
-        { x: 'x3', y: 52 },
-        { x: 'x4', y: 30 },
-        { x: 'x5', y: 51 },
-      ],
+      data: generateData(),
       valueFormatter: (value: number) => `${value} credits`,
     },
   ];

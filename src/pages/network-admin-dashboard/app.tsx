@@ -27,9 +27,25 @@ export function App() {
     },
   ]);
 
+  const [refreshKey, setRefreshKey] = useState(0);
+
   const handleRefreshData = () => {
-    console.log('Refreshing data...');
-    // Add your refresh logic here
+    setFlashbarItems([
+      {
+        type: 'success' as const,
+        content: 'Data refreshed successfully',
+        dismissible: true,
+        dismissLabel: 'Dismiss',
+        onDismiss: () => setFlashbarItems([]),
+        id: 'success-message',
+      },
+    ]);
+    setRefreshKey(prev => prev + 1);
+
+    // Auto-dismiss success message after 3 seconds
+    setTimeout(() => {
+      setFlashbarItems([]);
+    }, 3000);
   };
 
   return (
@@ -64,11 +80,11 @@ export function App() {
             {flashbarItems.length > 0 && <Flashbar items={flashbarItems} />}
 
             <Grid gridDefinition={[{ colspan: { default: 12, xs: 12, s: 6 } }, { colspan: { default: 12, xs: 12, s: 6 } }]}>
-              <NetworkTrafficChart />
-              <CreditUsageChart />
+              <NetworkTrafficChart key={`traffic-${refreshKey}`} />
+              <CreditUsageChart key={`credit-${refreshKey}`} />
             </Grid>
 
-            <DevicesTable />
+            <DevicesTable key={`devices-${refreshKey}`} />
           </SpaceBetween>
         </ContentLayout>
       }

@@ -7,43 +7,36 @@ import AreaChart from '@cloudscape-design/components/area-chart';
 import Box from '@cloudscape-design/components/box';
 
 export default function NetworkTrafficChart() {
+  // Generate slightly randomized data for interactive feel
+  const generateData = () => {
+    const baseData1 = [120, 135, 142, 155, 148, 165, 178, 185, 192, 205, 198, 182];
+    const baseData2 = [90, 98, 105, 118, 112, 125, 138, 145, 152, 165, 158, 142];
+
+    return {
+      site1: baseData1.map((val, i) => ({
+        x: new Date(2024, 0, i + 1),
+        y: val + Math.floor(Math.random() * 10 - 5),
+      })),
+      site2: baseData2.map((val, i) => ({
+        x: new Date(2024, 0, i + 1),
+        y: val + Math.floor(Math.random() * 10 - 5),
+      })),
+    };
+  };
+
+  const data = generateData();
+
   const series = [
     {
       title: 'Site 1',
       type: 'area' as const,
-      data: [
-        { x: new Date(2024, 0, 1), y: 120 },
-        { x: new Date(2024, 0, 2), y: 135 },
-        { x: new Date(2024, 0, 3), y: 142 },
-        { x: new Date(2024, 0, 4), y: 155 },
-        { x: new Date(2024, 0, 5), y: 148 },
-        { x: new Date(2024, 0, 6), y: 165 },
-        { x: new Date(2024, 0, 7), y: 178 },
-        { x: new Date(2024, 0, 8), y: 185 },
-        { x: new Date(2024, 0, 9), y: 192 },
-        { x: new Date(2024, 0, 10), y: 205 },
-        { x: new Date(2024, 0, 11), y: 198 },
-        { x: new Date(2024, 0, 12), y: 182 },
-      ],
+      data: data.site1,
       valueFormatter: (value: number) => `${value} MB`,
     },
     {
       title: 'Site 2',
       type: 'area' as const,
-      data: [
-        { x: new Date(2024, 0, 1), y: 90 },
-        { x: new Date(2024, 0, 2), y: 98 },
-        { x: new Date(2024, 0, 3), y: 105 },
-        { x: new Date(2024, 0, 4), y: 118 },
-        { x: new Date(2024, 0, 5), y: 112 },
-        { x: new Date(2024, 0, 6), y: 125 },
-        { x: new Date(2024, 0, 7), y: 138 },
-        { x: new Date(2024, 0, 8), y: 145 },
-        { x: new Date(2024, 0, 9), y: 152 },
-        { x: new Date(2024, 0, 10), y: 165 },
-        { x: new Date(2024, 0, 11), y: 158 },
-        { x: new Date(2024, 0, 12), y: 142 },
-      ],
+      data: data.site2,
       valueFormatter: (value: number) => `${value} MB`,
     },
   ];
