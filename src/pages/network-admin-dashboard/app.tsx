@@ -20,48 +20,50 @@ import { CustomAppLayout } from '../commons/common-components';
 
 export function App() {
   const [filteringText, setFilteringText] = useState('');
+  const [selectedItems, setSelectedItems] = useState<any[]>([]);
+  const [currentPageIndex, setCurrentPageIndex] = useState(1);
 
-  // Sample data for Network Traffic area chart
+  // Sample data for Network Traffic area chart (12 data points as in design)
   const networkTrafficSeries = [
     {
       title: 'Site 1',
       type: 'area' as const,
       data: [
-        { x: new Date(2023, 0, 1), y: 35000 },
-        { x: new Date(2023, 0, 2), y: 38000 },
-        { x: new Date(2023, 0, 3), y: 42000 },
-        { x: new Date(2023, 0, 4), y: 45000 },
-        { x: new Date(2023, 0, 5), y: 47000 },
-        { x: new Date(2023, 0, 6), y: 48000 },
-        { x: new Date(2023, 0, 7), y: 50000 },
-        { x: new Date(2023, 0, 8), y: 51000 },
-        { x: new Date(2023, 0, 9), y: 52000 },
-        { x: new Date(2023, 0, 10), y: 54000 },
-        { x: new Date(2023, 0, 11), y: 55000 },
-        { x: new Date(2023, 0, 12), y: 53000 },
+        { x: new Date(2023, 0, 1), y: 140000 },
+        { x: new Date(2023, 0, 2), y: 145000 },
+        { x: new Date(2023, 0, 3), y: 150000 },
+        { x: new Date(2023, 0, 4), y: 155000 },
+        { x: new Date(2023, 0, 5), y: 158000 },
+        { x: new Date(2023, 0, 6), y: 160000 },
+        { x: new Date(2023, 0, 7), y: 165000 },
+        { x: new Date(2023, 0, 8), y: 170000 },
+        { x: new Date(2023, 0, 9), y: 172000 },
+        { x: new Date(2023, 0, 10), y: 175000 },
+        { x: new Date(2023, 0, 11), y: 178000 },
+        { x: new Date(2023, 0, 12), y: 180000 },
       ],
     },
     {
       title: 'Site 2',
       type: 'area' as const,
       data: [
-        { x: new Date(2023, 0, 1), y: 25000 },
-        { x: new Date(2023, 0, 2), y: 27000 },
-        { x: new Date(2023, 0, 3), y: 30000 },
-        { x: new Date(2023, 0, 4), y: 33000 },
-        { x: new Date(2023, 0, 5), y: 35000 },
-        { x: new Date(2023, 0, 6), y: 37000 },
-        { x: new Date(2023, 0, 7), y: 38000 },
-        { x: new Date(2023, 0, 8), y: 39000 },
-        { x: new Date(2023, 0, 9), y: 41000 },
-        { x: new Date(2023, 0, 10), y: 42000 },
-        { x: new Date(2023, 0, 11), y: 43000 },
-        { x: new Date(2023, 0, 12), y: 40000 },
+        { x: new Date(2023, 0, 1), y: 90000 },
+        { x: new Date(2023, 0, 2), y: 95000 },
+        { x: new Date(2023, 0, 3), y: 100000 },
+        { x: new Date(2023, 0, 4), y: 105000 },
+        { x: new Date(2023, 0, 5), y: 108000 },
+        { x: new Date(2023, 0, 6), y: 110000 },
+        { x: new Date(2023, 0, 7), y: 115000 },
+        { x: new Date(2023, 0, 8), y: 120000 },
+        { x: new Date(2023, 0, 9), y: 122000 },
+        { x: new Date(2023, 0, 10), y: 125000 },
+        { x: new Date(2023, 0, 11), y: 128000 },
+        { x: new Date(2023, 0, 12), y: 130000 },
       ],
     },
   ];
 
-  // Sample data for Credit Usage bar chart
+  // Sample data for Credit Usage bar chart (5 bars as in design)
   const creditUsageData = [
     { x: 'x1', y: 120 },
     { x: 'x2', y: 180 },
@@ -88,6 +90,7 @@ export function App() {
     <CustomAppLayout
       content={
         <SpaceBetween size="l">
+          {/* Page Header */}
           <Header
             variant="h1"
             description="Network Traffic, Credit Usage, and Your Devices"
@@ -100,38 +103,54 @@ export function App() {
             Network Adminstration Dashboard
           </Header>
 
+          {/* Warning Banner */}
           <Flashbar
             items={[
               {
                 type: 'warning',
                 dismissible: true,
+                dismissLabel: 'Dismiss',
                 content: 'This is a warning message',
                 id: 'warning-message',
               },
             ]}
           />
 
+          {/* Charts Section */}
           <Grid gridDefinition={[{ colspan: 6 }, { colspan: 6 }]}>
+            {/* Network Traffic Area Chart */}
             <Container header={<Header variant="h2">Network traffic</Header>}>
               <AreaChart
                 series={networkTrafficSeries}
                 xScaleType="time"
-                yTitle="y-axis"
+                yTitle="Network traffic"
                 xTitle="Day"
                 height={300}
                 hideFilter
                 hideLegend={false}
                 statusType="finished"
+                ariaLabel="Network traffic area chart"
+                ariaDescription="Area chart showing network traffic over time for Site 1 and Site 2"
                 i18nStrings={{
                   filterLabel: 'Filter displayed data',
                   filterPlaceholder: 'Filter data',
                   legendAriaLabel: 'Legend',
                   chartAriaRoleDescription: 'area chart',
-                  yTickFormatter: value => `y${Math.round(value / 10000)}`,
+                  xTickFormatter: (value: Date) =>
+                    value
+                      .toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                      })
+                      .split(' ')
+                      .reverse()
+                      .join(' '),
+                  yTickFormatter: value => `y${Math.round(value / 30000)}`,
                 }}
               />
             </Container>
 
+            {/* Credit Usage Bar Chart */}
             <Container header={<Header variant="h2">Credit Usage</Header>}>
               <BarChart
                 series={[
@@ -142,12 +161,14 @@ export function App() {
                   },
                 ]}
                 xScaleType="categorical"
-                yTitle="y-axis"
+                yTitle="Credit Usage"
                 xTitle="Day"
                 height={300}
                 hideFilter
                 hideLegend={false}
                 statusType="finished"
+                ariaLabel="Credit usage bar chart"
+                ariaDescription="Bar chart showing credit usage over 5 days"
                 i18nStrings={{
                   filterLabel: 'Filter displayed data',
                   filterPlaceholder: 'Filter data',
@@ -159,6 +180,7 @@ export function App() {
             </Container>
           </Grid>
 
+          {/* Devices Table */}
           <Table
             header={
               <Header
@@ -174,12 +196,6 @@ export function App() {
               </Header>
             }
             columnDefinitions={[
-              {
-                id: 'select',
-                header: '',
-                cell: () => <input type="checkbox" />,
-                width: 50,
-              },
               {
                 id: 'col1',
                 header: 'Column header',
@@ -224,19 +240,28 @@ export function App() {
               },
             ]}
             items={devicesData}
+            selectedItems={selectedItems}
+            onSelectionChange={({ detail }) => setSelectedItems(detail.selectedItems)}
+            selectionType="multi"
             sortingDisabled={false}
             filter={
               <TextFilter
                 filteringText={filteringText}
                 filteringPlaceholder="Placeholder"
+                filteringAriaLabel="Filter devices"
                 onChange={({ detail }) => setFilteringText(detail.filteringText)}
               />
             }
             pagination={
               <Pagination
-                currentPageIndex={1}
+                currentPageIndex={currentPageIndex}
                 pagesCount={5}
-                onChange={({ detail }) => console.log(detail.currentPageIndex)}
+                ariaLabels={{
+                  nextPageLabel: 'Next page',
+                  previousPageLabel: 'Previous page',
+                  pageLabel: pageNumber => `Page ${pageNumber}`,
+                }}
+                onChange={({ detail }) => setCurrentPageIndex(detail.currentPageIndex)}
               />
             }
             empty={
