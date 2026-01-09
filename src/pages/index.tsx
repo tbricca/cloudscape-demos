@@ -269,9 +269,14 @@ export default function Home() {
                       Access powerful, enterprise-ready dashboards and tools designed for modern cloud operations.
                       Monitor services, manage resources, and gain actionable insights across your infrastructure.
                     </Box>
-                    <Button variant="primary" iconAlign="right" iconName="add-plus">
-                      Create new dashboard
-                    </Button>
+                    <SpaceBetween direction="horizontal" size="s">
+                      <Button variant="primary" iconAlign="right" iconName="add-plus">
+                        Create new dashboard
+                      </Button>
+                      <Button variant="normal" iconName="external">
+                        View Documentation
+                      </Button>
+                    </SpaceBetween>
                   </SpaceBetween>
                   <Box>
                     <img
