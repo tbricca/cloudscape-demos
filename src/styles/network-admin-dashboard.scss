@@ -1,0 +1,102 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: MIT-0
+
+// Network Administration Dashboard styles
+.network-admin-dashboard {
+  // Chart containers
+  .chart-container {
+    background: #fff;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+
+    @media (max-width: 768px) {
+      margin-bottom: 16px;
+    }
+  }
+
+  // Legend styling
+  .chart-legend {
+    display: flex;
+    gap: 16px;
+    font-size: 14px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .legend-square {
+      width: 14px;
+      height: 14px;
+      border-radius: 2px;
+    }
+
+    .legend-line {
+      display: flex;
+      gap: 2px;
+
+      .dash {
+        width: 6px;
+        height: 3px;
+        border-radius: 1px;
+        background: #5f6b7a;
+      }
+    }
+  }
+
+  // Table styling
+  .devices-table-container {
+    margin-top: 24px;
+  }
+
+  // Responsive adjustments
+  @media (max-width: 992px) {
+    .chart-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+
+  @media (min-width: 993px) {
+    .chart-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+  }
+
+  // Warning banner styling
+  .warning-banner {
+    background: #fff4b4;
+    border: 1px solid #946c00;
+    border-radius: 8px;
+    padding: 13px 34px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .warning-content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #946c00;
+      font-size: 14px;
+    }
+
+    .warning-dismiss {
+      color: #946c00;
+      font-weight: 600;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-size: 14px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
