@@ -23,10 +23,7 @@ export function CreditUsageChart() {
   ];
 
   return (
-    <Container
-      header={<Header variant="h3">Credit Usage</Header>}
-      fitHeight
-    >
+    <Container header={<Header variant="h3">Credit Usage</Header>} fitHeight>
       <BarChart
         series={series}
         xDomain={['x1', 'x2', 'x3', 'x4', 'x5']}

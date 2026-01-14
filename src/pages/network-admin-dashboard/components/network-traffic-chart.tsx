@@ -49,10 +49,7 @@ export function NetworkTrafficChart() {
   ];
 
   return (
-    <Container
-      header={<Header variant="h3">Network traffic</Header>}
-      fitHeight
-    >
+    <Container header={<Header variant="h3">Network traffic</Header>} fitHeight>
       <AreaChart
         series={series}
         xDomain={[new Date(2023, 0, 1), new Date(2023, 0, 12)]}

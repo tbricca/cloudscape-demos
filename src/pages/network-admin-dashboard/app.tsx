@@ -66,12 +66,7 @@ export function App() {
                 />
               )}
 
-              <Grid
-                gridDefinition={[
-                  { colspan: { default: 12, s: 6 } },
-                  { colspan: { default: 12, s: 6 } },
-                ]}
-              >
+              <Grid gridDefinition={[{ colspan: { default: 12, s: 6 } }, { colspan: { default: 12, s: 6 } }]}>
                 <NetworkTrafficChart />
                 <CreditUsageChart />
               </Grid>
@@ -90,12 +85,7 @@ export function App() {
                     My Devices
                   </Header>
 
-                  <Grid
-                    gridDefinition={[
-                      { colspan: { default: 12, s: 8 } },
-                      { colspan: { default: 12, s: 4 } },
-                    ]}
-                  >
+                  <Grid gridDefinition={[{ colspan: { default: 12, s: 8 } }, { colspan: { default: 12, s: 4 } }]}>
                     <TextFilter
                       filteringText={filteringText}
                       filteringPlaceholder="Placeholder"
