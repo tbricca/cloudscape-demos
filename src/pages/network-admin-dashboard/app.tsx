@@ -191,12 +191,7 @@ export function App() {
               </Grid>
             }
           >
-            <Grid
-              gridDefinition={[
-                { colspan: { default: 12, s: 6 } },
-                { colspan: { default: 12, s: 6 } },
-              ]}
-            >
+            <Grid gridDefinition={[{ colspan: { default: 12, s: 6 } }, { colspan: { default: 12, s: 6 } }]}>
               <Container>
                 <AreaChart
                   series={networkTrafficData}
