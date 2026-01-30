@@ -73,18 +73,24 @@ const networkTrafficSeries: any[] = [
 
 // Credit Usage data (Bar chart)
 const creditUsageData = [
-  { x: 'x1', y: 425 },
-  { x: 'x2', y: 512 },
-  { x: 'x3', y: 498 },
-  { x: 'x4', y: 330 },
-  { x: 'x5', y: 505 },
+  { x: 'x1', site1: 425, site2: 380 },
+  { x: 'x2', site1: 512, site2: 490 },
+  { x: 'x3', site1: 498, site2: 460 },
+  { x: 'x4', site1: 330, site2: 350 },
+  { x: 'x5', site1: 505, site2: 470 },
 ];
 
 const creditUsageSeries: any[] = [
   {
     title: 'Site 1',
     type: 'bar',
-    data: creditUsageData.map((d, i) => ({ x: i + 1, y: d.y })),
+    data: creditUsageData.map((d, i) => ({ x: i + 1, y: d.site1 })),
+    valueFormatter: (value: number) => `${value.toFixed(0)}`,
+  },
+  {
+    title: 'Site 2',
+    type: 'bar',
+    data: creditUsageData.map((d, i) => ({ x: i + 1, y: d.site2 })),
     valueFormatter: (value: number) => `${value.toFixed(0)}`,
   },
   {
@@ -271,13 +277,15 @@ export function App() {
                   yDomain={[0, 600]}
                   xTitle="Day"
                   yTitle="y6"
-                  hideFilter
+                  hideFilter={false}
                   hideLegend={false}
                   xScaleType="categorical"
                   ariaLabel="Credit usage chart"
                   ariaDescription={`Bar chart showing credit usage. ${barChartInstructions}`}
                   i18nStrings={{
                     ...commonChartProps.i18nStrings,
+                    filterLabel: 'Filter displayed sites',
+                    filterPlaceholder: 'Filter sites',
                     xTickFormatter: (value) => `x${value}`,
                   }}
                   detailPopoverSeriesContent={({ series, y }) => ({
