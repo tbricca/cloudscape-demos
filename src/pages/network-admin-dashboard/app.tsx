@@ -1,28 +1,64 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: MIT-0
+
+/**
+ * Network Administration Dashboard
+ *
+ * This component provides a comprehensive dashboard for monitoring and managing network infrastructure.
+ * It displays real-time network traffic metrics, credit usage analytics, and device inventory management.
+ *
+ * Key Features:
+ * - Network traffic visualization using area charts for multi-site comparison
+ * - Credit usage tracking with bar charts showing performance against goals
+ * - Device management table with filtering, sorting, and pagination capabilities
+ * - Dismissible warning notifications for system alerts
+ * - Responsive grid layout that adapts to different screen sizes
+ */
+
 import React, { useState } from 'react';
 import { useCollection } from '@cloudscape-design/collection-hooks';
 
+// Core Layout Components
+// These components provide the foundational structure for the dashboard page
 import AppLayout from '@cloudscape-design/components/app-layout';
 import BreadcrumbGroup from '@cloudscape-design/components/breadcrumb-group';
+import ContentLayout from '@cloudscape-design/components/content-layout';
+import Grid from '@cloudscape-design/components/grid';
+import SpaceBetween from '@cloudscape-design/components/space-between';
+
+// UI Components
+// Interactive elements and containers for content organization
 import Button from '@cloudscape-design/components/button';
 import Container from '@cloudscape-design/components/container';
-import ContentLayout from '@cloudscape-design/components/content-layout';
-import Flashbar from '@cloudscape-design/components/flashbar';
-import Grid from '@cloudscape-design/components/grid';
 import Header from '@cloudscape-design/components/header';
-import Pagination from '@cloudscape-design/components/pagination';
-import SpaceBetween from '@cloudscape-design/components/space-between';
-import Table from '@cloudscape-design/components/table';
-import TextFilter from '@cloudscape-design/components/text-filter';
+import Flashbar from '@cloudscape-design/components/flashbar';
 import Box from '@cloudscape-design/components/box';
+
+// Data Display Components
+// Components for visualizing and managing data
+import Table from '@cloudscape-design/components/table';
 import AreaChart from '@cloudscape-design/components/area-chart';
 import BarChart from '@cloudscape-design/components/bar-chart';
+import TextFilter from '@cloudscape-design/components/text-filter';
+import Pagination from '@cloudscape-design/components/pagination';
 import Link from '@cloudscape-design/components/link';
 
+// Shared Utilities
+// Common chart configurations and formatters used across dashboard widgets
 import { commonChartProps, dateFormatter, barChartInstructions } from '../dashboard/widgets/chart-commons';
 
-// Mock data for devices
+/**
+ * Mock Device Data
+ *
+ * Simulates a collection of network devices for demonstration purposes.
+ * In a production environment, this would be replaced with data from an API endpoint.
+ *
+ * Each device contains:
+ * - id: Unique identifier for the device
+ * - name: Human-readable device name
+ * - column1-6: Placeholder data representing various device properties
+ *              (e.g., IP address, MAC address, status, uptime, etc.)
+ */
 const MOCK_DEVICES = Array.from({ length: 12 }, (_, i) => ({
   id: `device-${i + 1}`,
   name: `Device ${i + 1}`,
@@ -34,7 +70,20 @@ const MOCK_DEVICES = Array.from({ length: 12 }, (_, i) => ({
   column6: 'Cell Value',
 }));
 
-// Network traffic data (Area chart)
+/**
+ * Network Traffic Time Series Data
+ *
+ * Contains historical network traffic measurements across multiple sites.
+ * This data powers the area chart visualization showing traffic patterns over time.
+ *
+ * Data Structure:
+ * - x: Time period identifier (x1 through x12 representing daily measurements)
+ * - y1: Traffic volume for Site 1 (in arbitrary units)
+ * - y2: Traffic volume for Site 2 (in arbitrary units)
+ *
+ * The data demonstrates typical network traffic patterns with variations
+ * that help identify trends, peaks, and potential issues.
+ */
 const networkTrafficData = [
   { x: 'x1', y1: 120, y2: 100 },
   { x: 'x2', y1: 140, y2: 110 },
