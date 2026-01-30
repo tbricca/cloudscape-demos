@@ -99,6 +99,23 @@ const networkTrafficData = [
   { x: 'x12', y1: 150, y2: 155 },
 ];
 
+/**
+ * Network Traffic Chart Series Configuration
+ *
+ * Defines the data series displayed in the network traffic area chart.
+ * The chart visualizes traffic patterns for multiple sites with a performance threshold.
+ *
+ * Series Components:
+ * 1. Site 1: Area chart showing traffic volume over time for the primary site
+ * 2. Site 2: Area chart showing traffic volume for the secondary site
+ * 3. Performance Goal: Horizontal threshold line at y=150 indicating target traffic level
+ *
+ * The area chart type provides visual emphasis on volume and trends, making it easy
+ * to identify periods of high/low traffic and compare performance across sites.
+ *
+ * Users can filter series visibility using the chart's filter dropdown to focus
+ * on specific sites or compare them against the performance goal.
+ */
 const networkTrafficSeries: any[] = [
   {
     title: 'Site 1',
@@ -120,7 +137,23 @@ const networkTrafficSeries: any[] = [
   },
 ];
 
-// Credit Usage data (Bar chart)
+/**
+ * Credit Usage Time Series Data
+ *
+ * Tracks credit consumption across different sites over time.
+ * This data is used to monitor resource usage and ensure sites stay within allocated limits.
+ *
+ * Data Structure:
+ * - x: Time period identifier (x1 through x5 representing measurement periods)
+ * - site1: Credit units consumed by Site 1
+ * - site2: Credit units consumed by Site 2
+ *
+ * Credit tracking helps with:
+ * - Budget management and cost optimization
+ * - Identifying unusual consumption patterns
+ * - Planning for capacity needs
+ * - Ensuring compliance with usage quotas
+ */
 const creditUsageData = [
   { x: 'x1', site1: 425, site2: 380 },
   { x: 'x2', site1: 512, site2: 490 },
