@@ -148,7 +148,7 @@ const columnDefinitions = [
 
 export function App() {
   const [flashbarVisible, setFlashbarVisible] = useState(true);
-  
+
   const { items, actions, filteredItemsCount, collectionProps, filterProps, paginationProps } = useCollection(
     MOCK_DEVICES,
     {
@@ -223,22 +223,12 @@ export function App() {
         >
           <SpaceBetween size="l">
             {/* Search bar */}
-            <TextFilter
-              filteringPlaceholder="Placeholder"
-              filteringText=""
-              onChange={() => {}}
-            />
+            <TextFilter filteringPlaceholder="Placeholder" filteringText="" onChange={() => {}} />
 
             {/* Charts Grid */}
             <Grid gridDefinition={[{ colspan: 6 }, { colspan: 6 }]}>
               {/* Network Traffic Chart */}
-              <Container
-                header={
-                  <Header variant="h2">
-                    Network traffic
-                  </Header>
-                }
-              >
+              <Container header={<Header variant="h2">Network traffic</Header>}>
                 <AreaChart
                   {...commonChartProps}
                   series={networkTrafficSeries}
@@ -252,7 +242,7 @@ export function App() {
                   ariaLabel="Network traffic chart"
                   i18nStrings={{
                     ...commonChartProps.i18nStrings,
-                    xTickFormatter: (value) => `x${value}`,
+                    xTickFormatter: value => `x${value}`,
                   }}
                   detailPopoverSeriesContent={({ series, y }) => ({
                     key: series.title,
@@ -262,13 +252,7 @@ export function App() {
               </Container>
 
               {/* Credit Usage Chart */}
-              <Container
-                header={
-                  <Header variant="h2">
-                    Credit Usage
-                  </Header>
-                }
-              >
+              <Container header={<Header variant="h2">Credit Usage</Header>}>
                 <BarChart
                   {...commonChartProps}
                   series={creditUsageSeries}
@@ -286,7 +270,7 @@ export function App() {
                     ...commonChartProps.i18nStrings,
                     filterLabel: 'Filter displayed sites',
                     filterPlaceholder: 'Filter sites',
-                    xTickFormatter: (value) => `x${value}`,
+                    xTickFormatter: value => `x${value}`,
                   }}
                   detailPopoverSeriesContent={({ series, y }) => ({
                     key: series.title,
