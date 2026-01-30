@@ -237,11 +237,13 @@ export function App() {
                   yDomain={[0, 200]}
                   xTitle="Day"
                   yTitle="y6"
-                  hideFilter
+                  hideFilter={false}
                   hideLegend={false}
                   ariaLabel="Network traffic chart"
                   i18nStrings={{
                     ...commonChartProps.i18nStrings,
+                    filterLabel: 'Filter displayed sites',
+                    filterPlaceholder: 'Filter sites',
                     xTickFormatter: value => `x${value}`,
                   }}
                   detailPopoverSeriesContent={({ series, y }) => ({
