@@ -162,6 +162,27 @@ const creditUsageData = [
   { x: 'x5', site1: 505, site2: 470 },
 ];
 
+/**
+ * Credit Usage Chart Series Configuration
+ *
+ * Configures the bar chart that displays credit consumption patterns.
+ * Bar charts are ideal for comparing discrete values across categories and time periods.
+ *
+ * Series Components:
+ * 1. Site 1 Bar Series: Shows credit consumption for the primary site
+ * 2. Site 2 Bar Series: Shows credit consumption for the secondary site
+ * 3. Performance Goal Threshold: Horizontal line at y=450 representing the target/limit
+ *
+ * The grouped bar layout allows for easy side-by-side comparison between sites
+ * for each time period. The threshold line helps quickly identify periods where
+ * usage exceeded or approached the performance goal.
+ *
+ * Features:
+ * - Interactive filtering to show/hide individual sites
+ * - Value formatters for consistent number display
+ * - Categorical x-axis for distinct time periods
+ * - Threshold indicator for performance monitoring
+ */
 const creditUsageSeries: any[] = [
   {
     title: 'Site 1',
@@ -183,6 +204,29 @@ const creditUsageSeries: any[] = [
   },
 ];
 
+/**
+ * Device Table Column Definitions
+ *
+ * Defines the structure and behavior of columns in the devices table.
+ * Each column specifies how device data should be displayed and sorted.
+ *
+ * Column Properties:
+ * - id: Unique identifier for the column
+ * - header: Display text shown in the column header
+ * - cell: Function that extracts and formats the cell value from device data
+ * - sortingField: Property name used when sorting the table by this column
+ *
+ * In a production environment, these columns would be configured to display:
+ * - Device hostname or identifier
+ * - IP address and MAC address
+ * - Connection status (online/offline)
+ * - Device type (router, switch, workstation, etc.)
+ * - Last seen timestamp
+ * - Bandwidth usage or other metrics
+ * - Actions or configuration options
+ *
+ * The current implementation uses placeholder "Cell Value" data for demonstration.
+ */
 const columnDefinitions = [
   {
     id: 'name',
