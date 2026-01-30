@@ -627,10 +627,31 @@ export function App() {
               - Security compliance status
             */}
             <Table
+              // Spread collection props from useCollection hook (selectedItems, onSelectionChange, etc.)
               {...collectionProps}
+              // Column definitions specify structure, content, and sorting behavior
               columnDefinitions={columnDefinitions}
+              // Items are the filtered and paginated subset of devices to display
               items={items}
+              // Multi-select enables checkboxes for bulk operations
               selectionType="multi"
+              /**
+               * Table Header Section
+               *
+               * Displays the table title, description, and primary actions.
+               *
+               * - Title: "My Devices" clearly identifies the table content
+               * - Description: Provides context about what devices are shown
+               * - Actions: "Add Device" button initiates device provisioning workflow
+               *
+               * The Add Device action would typically:
+               * 1. Open a modal or side panel form
+               * 2. Collect device information (name, IP, type, etc.)
+               * 3. Validate the input data
+               * 4. Submit to the backend API
+               * 5. Refresh the table to show the new device
+               * 6. Display success notification
+               */
               header={
                 <Header
                   variant="h2"
@@ -644,6 +665,27 @@ export function App() {
                   My Devices
                 </Header>
               }
+              /**
+               * Table Filter Section
+               *
+               * Text-based search that filters the table in real-time.
+               *
+               * - Placeholder: Guides users on what they can search for
+               * - Count Text: Shows "X matches" or "X match" (grammatically correct)
+               * - filterProps: Automatically managed by useCollection hook
+               *
+               * The filter searches across all device properties and updates
+               * the visible items instantly as the user types. If no matches
+               * are found, the table displays the "no match" empty state with
+               * a clear filter button.
+               *
+               * Filter Behavior:
+               * - Case-insensitive search
+               * - Searches all column data
+               * - Updates results on each keystroke
+               * - Preserves selection state during filtering
+               * - Shows result count for user feedback
+               */
               filter={
                 <TextFilter
                   {...filterProps}
@@ -651,6 +693,23 @@ export function App() {
                   countText={`${filteredItemsCount} ${filteredItemsCount === 1 ? 'match' : 'matches'}`}
                 />
               }
+              /**
+               * Pagination Controls
+               *
+               * Allows navigation through large device lists.
+               *
+               * - Page Size: 10 devices per page (configured in useCollection)
+               * - Navigation: Previous/Next buttons plus page numbers
+               * - Page Indicator: Shows current page and total pages
+               * - paginationProps: Managed by useCollection hook
+               *
+               * Pagination improves performance by rendering only a subset
+               * of devices at a time, and makes it easier to browse through
+               * large inventories without overwhelming the user.
+               *
+               * The current page state persists during filtering, but resets
+               * to page 1 when the filter criteria change significantly.
+               */
               pagination={<Pagination {...paginationProps} />}
             />
           </SpaceBetween>
