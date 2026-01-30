@@ -360,8 +360,18 @@ export function App() {
 
   return (
     <AppLayout
+      // Hide navigation and tools panels for a focused, full-width dashboard view
       navigationHide
       toolsHide
+      /**
+       * Breadcrumb Navigation
+       *
+       * Provides hierarchical navigation showing the user's current location:
+       * Service > Administrative Dashboard
+       *
+       * This helps users understand their context within the application and
+       * provides quick navigation back to parent sections.
+       */
       breadcrumbs={
         <BreadcrumbGroup
           items={[
@@ -370,6 +380,23 @@ export function App() {
           ]}
         />
       }
+      /**
+       * Notification Banner (Flashbar)
+       *
+       * Displays important system alerts and warnings at the top of the page.
+       * The banner is conditionally rendered based on flashbarVisible state.
+       *
+       * Features:
+       * - Warning type: Uses amber/yellow styling to indicate caution
+       * - Dismissible: Users can close the notification via the X button
+       * - Persistent: Remains visible across page interactions until dismissed
+       *
+       * In a production system, this would display real-time alerts such as:
+       * - Network outages or degraded performance
+       * - Maintenance windows or planned downtime
+       * - Security advisories or policy updates
+       * - Quota or threshold warnings
+       */
       notifications={
         flashbarVisible ? (
           <Flashbar
@@ -384,8 +411,21 @@ export function App() {
           />
         ) : null
       }
+      /**
+       * Main Content Area
+       *
+       * Contains all dashboard content including header, charts, and device table.
+       * Uses ContentLayout for consistent spacing and responsive behavior.
+       */
       content={
         <ContentLayout
+          /**
+           * Page Header
+           *
+           * Displays the dashboard title, description, and primary actions.
+           * The "Refresh Data" button would trigger a reload of all metrics
+           * and device information in a production environment.
+           */
           header={
             <SpaceBetween size="m">
               <Header
@@ -403,12 +443,52 @@ export function App() {
           }
         >
           <SpaceBetween size="l">
-            {/* Search bar */}
+            {/*
+              Global Search/Filter Bar
+
+              Provides a centralized search interface for filtering content across
+              the entire dashboard. In a production implementation, this could filter:
+              - Device names and identifiers
+              - Network traffic by site or time period
+              - Credit usage by category
+
+              Currently non-functional as it's a placeholder for demonstration.
+            */}
             <TextFilter filteringPlaceholder="Placeholder" filteringText="" onChange={() => {}} />
 
-            {/* Charts Grid */}
+            {/*
+              Analytics Charts Grid
+
+              Two-column grid layout displaying key performance metrics.
+              The grid automatically stacks on smaller screens for responsive design.
+
+              Chart 1 (Left): Network Traffic - Area chart showing traffic trends
+              Chart 2 (Right): Credit Usage - Bar chart comparing consumption
+
+              Both charts are configured with equal heights and matching filters
+              to provide a consistent and balanced visual experience.
+            */}
             <Grid gridDefinition={[{ colspan: 6 }, { colspan: 6 }]}>
-              {/* Network Traffic Chart */}
+              {/*
+                Network Traffic Visualization
+
+                Area chart displaying network traffic patterns across multiple sites.
+
+                Key Features:
+                - Multi-series area chart with Site 1 and Site 2 data
+                - Performance goal threshold line for target monitoring
+                - Interactive legend for toggling series visibility
+                - Filter dropdown to focus on specific sites
+                - Hover tooltips showing exact values at each point
+                - 12-day time range (x1 through x12)
+                - Y-axis range: 0-200 units
+
+                Use Cases:
+                - Identifying traffic spikes or unusual patterns
+                - Comparing performance across sites
+                - Monitoring compliance with performance goals
+                - Capacity planning based on traffic trends
+              */}
               <Container header={<Header variant="h2">Network traffic</Header>}>
                 <AreaChart
                   {...commonChartProps}
