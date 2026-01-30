@@ -272,13 +272,67 @@ const columnDefinitions = [
   },
 ];
 
+/**
+ * Main Application Component
+ *
+ * This is the primary component for the Network Administration Dashboard.
+ * It orchestrates the entire page layout including navigation, notifications,
+ * charts, and device management table.
+ *
+ * Component Structure:
+ * 1. State Management: Controls visibility of notifications and table interactions
+ * 2. Collection Hook: Manages table data with filtering, sorting, and pagination
+ * 3. Layout: Uses AppLayout for consistent page structure with breadcrumbs
+ * 4. Content Areas:
+ *    - Header with page title and refresh action
+ *    - Warning notification banner (dismissible)
+ *    - Search/filter bar for global filtering
+ *    - Side-by-side charts for traffic and credit monitoring
+ *    - Device inventory table with full CRUD capabilities
+ *
+ * @returns {JSX.Element} The complete dashboard interface
+ */
 export function App() {
+  /**
+   * Flashbar Visibility State
+   *
+   * Controls whether the warning notification banner is displayed at the top of the page.
+   * Users can dismiss the notification, which sets this to false and hides the banner.
+   *
+   * Default: true (banner is visible on initial load)
+   *
+   * This pattern allows for temporary alerts that users can acknowledge and dismiss,
+   * improving the user experience by reducing visual clutter once alerts are addressed.
+   */
   const [flashbarVisible, setFlashbarVisible] = useState(true);
 
+  /**
+   * Table Collection Hook
+   *
+   * The useCollection hook from Cloudscape provides comprehensive table management:
+   *
+   * Returned Properties:
+   * - items: Filtered and paginated subset of devices to display
+   * - actions: Methods to programmatically control table state (setFiltering, etc.)
+   * - filteredItemsCount: Number of items matching current filter criteria
+   * - collectionProps: Props to spread onto the Table component (selectedItems, etc.)
+   * - filterProps: Props for the TextFilter component (filteringText, onChange, etc.)
+   * - paginationProps: Props for the Pagination component (currentPageIndex, etc.)
+   *
+   * Configuration:
+   * - filtering: Defines empty states and no-match messaging
+   * - pagination: Sets items per page (10 devices)
+   * - sorting: Enables column-based sorting
+   * - selection: Enables multi-select checkboxes for bulk actions
+   *
+   * This hook eliminates the need for manual state management of common table features,
+   * providing a consistent and accessible user experience out of the box.
+   */
   const { items, actions, filteredItemsCount, collectionProps, filterProps, paginationProps } = useCollection(
     MOCK_DEVICES,
     {
       filtering: {
+        // Empty state shown when there are no devices in the system
         empty: (
           <Box textAlign="center" color="inherit">
             <b>No devices</b>
@@ -287,6 +341,7 @@ export function App() {
             </Box>
           </Box>
         ),
+        // No match state shown when filter returns zero results
         noMatch: (
           <Box textAlign="center" color="inherit">
             <b>No matches</b>
@@ -297,9 +352,9 @@ export function App() {
           </Box>
         ),
       },
-      pagination: { pageSize: 10 },
-      sorting: {},
-      selection: {},
+      pagination: { pageSize: 10 }, // Display 10 devices per page
+      sorting: {}, // Enable sorting on all sortable columns
+      selection: {}, // Enable multi-row selection with checkboxes
     },
   );
 
