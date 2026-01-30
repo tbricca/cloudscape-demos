@@ -490,6 +490,19 @@ export function App() {
                 - Capacity planning based on traffic trends
               */}
               <Container header={<Header variant="h2">Network traffic</Header>}>
+                {/*
+                  Area Chart Configuration
+
+                  - series: Array of data series (Site 1, Site 2, Performance goal)
+                  - height: Fixed at 300px to match Credit Usage chart
+                  - xDomain: Days 1-12 representing the time range
+                  - yDomain: 0-200 units for traffic volume scale
+                  - hideFilter: false - Shows dropdown filter for series selection
+                  - hideLegend: false - Displays legend below chart
+                  - Accessibility: Includes aria labels for screen readers
+                  - Tooltips: Shows exact values on hover via detailPopoverSeriesContent
+                  - i18nStrings: Provides localized strings for UI elements
+                */}
                 <AreaChart
                   {...commonChartProps}
                   series={networkTrafficSeries}
@@ -514,8 +527,43 @@ export function App() {
                 />
               </Container>
 
-              {/* Credit Usage Chart */}
+              {/*
+                Credit Usage Monitoring
+
+                Bar chart displaying credit consumption across sites over time.
+
+                Key Features:
+                - Grouped bar chart comparing Site 1 and Site 2 consumption
+                - Performance goal threshold at 450 units
+                - Interactive filter to show/hide individual sites
+                - Categorical x-axis for discrete time periods (x1-x5)
+                - Y-axis range: 0-600 units to accommodate peak usage
+                - Height matched to Network Traffic chart (300px)
+
+                Use Cases:
+                - Budget tracking and cost management
+                - Identifying consumption anomalies or spikes
+                - Comparing usage patterns between sites
+                - Ensuring compliance with allocated quotas
+                - Planning for future capacity needs
+
+                The bar chart format makes it easy to compare exact values
+                between sites for each time period, unlike area charts which
+                emphasize trends and cumulative volume.
+              */}
               <Container header={<Header variant="h2">Credit Usage</Header>}>
+                {/*
+                  Bar Chart Configuration
+
+                  - series: Site 1, Site 2 bar data plus performance threshold
+                  - height: 300px (matches Network Traffic chart)
+                  - xDomain: Array of 5 time periods for categorical axis
+                  - yDomain: 0-600 units to show full range of consumption
+                  - xScaleType: 'categorical' for discrete bar groupings
+                  - hideFilter: false - Enables series filtering
+                  - Accessibility: Includes detailed aria description for screen readers
+                  - Navigation: Supports keyboard navigation per barChartInstructions
+                */}
                 <BarChart
                   {...commonChartProps}
                   series={creditUsageSeries}
@@ -543,7 +591,41 @@ export function App() {
               </Container>
             </Grid>
 
-            {/* My Devices Table */}
+            {/*
+              Device Inventory Management Table
+
+              Comprehensive table for viewing and managing network devices.
+
+              Features:
+              - Multi-select: Checkboxes allow bulk selection for batch operations
+              - Filtering: Text-based search across device properties
+              - Sorting: Click column headers to sort (ascending/descending)
+              - Pagination: Navigate through large device lists (10 per page)
+              - Empty States: Helpful messaging when no devices or no matches
+              - Actions: "Add Device" button for provisioning new devices
+
+              Column Layout:
+              - 7 columns displaying various device attributes
+              - Sortable by any column
+              - Resizable columns for customized views
+
+              Use Cases:
+              - Monitor device status and health
+              - Search for specific devices by name or properties
+              - Select multiple devices for bulk configuration changes
+              - Add new devices to the network inventory
+              - Export or report on device data
+
+              In production, this table would connect to a device management API
+              and display real-time information such as:
+              - Hostname, IP address, MAC address
+              - Device type (router, switch, access point, etc.)
+              - Connection status (online, offline, degraded)
+              - Last seen timestamp
+              - Firmware version and configuration state
+              - Associated site or location
+              - Security compliance status
+            */}
             <Table
               {...collectionProps}
               columnDefinitions={columnDefinitions}
