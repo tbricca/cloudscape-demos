@@ -50,22 +50,22 @@ const networkTrafficData = [
   { x: 'x12', y1: 150, y2: 155 },
 ];
 
-const networkTrafficSeries = [
+const networkTrafficSeries: any[] = [
   {
     title: 'Site 1',
-    type: 'area' as const,
+    type: 'area',
     data: networkTrafficData.map((d, i) => ({ x: i + 1, y: d.y1 })),
     valueFormatter: (value: number) => `${value.toFixed(0)}`,
   },
   {
     title: 'Site 2',
-    type: 'area' as const,
+    type: 'area',
     data: networkTrafficData.map((d, i) => ({ x: i + 1, y: d.y2 })),
     valueFormatter: (value: number) => `${value.toFixed(0)}`,
   },
   {
     title: 'Performance goal',
-    type: 'threshold' as const,
+    type: 'threshold',
     y: 150,
     valueFormatter: (value: number) => `${value.toFixed(0)}`,
   },
@@ -80,16 +80,16 @@ const creditUsageData = [
   { x: 'x5', y: 505 },
 ];
 
-const creditUsageSeries = [
+const creditUsageSeries: any[] = [
   {
     title: 'Site 1',
-    type: 'bar' as const,
+    type: 'bar',
     data: creditUsageData.map((d, i) => ({ x: i + 1, y: d.y })),
     valueFormatter: (value: number) => `${value.toFixed(0)}`,
   },
   {
     title: 'Performance goal',
-    type: 'threshold' as const,
+    type: 'threshold',
     y: 450,
     valueFormatter: (value: number) => `${value.toFixed(0)}`,
   },
