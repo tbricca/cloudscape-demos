@@ -19,20 +19,24 @@ import Flashbar from '@cloudscape-design/components/flashbar';
 import TopNavigation from '@cloudscape-design/components/top-navigation';
 
 // Sample data for the charts
-const networkTrafficData = [
-  { x: 'x1', y1: 35000, y2: 32000 },
-  { x: 'x2', y1: 38000, y2: 35000 },
-  { x: 'x3', y1: 42000, y2: 40000 },
-  { x: 'x4', y1: 48000, y2: 45000 },
-  { x: 'x5', y1: 52000, y2: 50000 },
-  { x: 'x6', y1: 58000, y2: 54000 },
-  { x: 'x7', y1: 60000, y2: 56000 },
-  { x: 'x8', y1: 58000, y2: 55000 },
-  { x: 'x9', y1: 62000, y2: 58000 },
-  { x: 'x10', y1: 65000, y2: 60000 },
-  { x: 'x11', y1: 58000, y2: 54000 },
-  { x: 'x12', y1: 50000, y2: 48000 },
-];
+const generateNetworkTrafficData = () => {
+  const data = [];
+  const now = new Date();
+  for (let i = 24; i >= 0; i--) {
+    const time = new Date(now.getTime() - i * 60 * 60 * 1000);
+    // Base values with some randomness for "detail"
+    const base1 = 40000 + Math.sin(i / 3) * 10000;
+    const base2 = 35000 + Math.cos(i / 2) * 8000;
+    data.push({
+      x: time,
+      y1: base1 + Math.random() * 5000,
+      y2: base2 + Math.random() * 4000,
+    });
+  }
+  return data;
+};
+
+const networkTrafficData = generateNetworkTrafficData();
 
 const creditUsageData = [
   { x: 'x1', y: 42000 },
@@ -169,45 +173,47 @@ export function App() {
                   <AreaChart
                     series={[
                       {
-                        title: 'Site 1',
+                        title: 'Site 1 (Primary)',
                         type: 'area',
                         data: networkTrafficData.map(d => ({ x: d.x, y: d.y1 })),
-                        color: '#688AE8',
+                        color: '#0972d3',
                       },
                       {
-                        title: 'Site 2',
+                        title: 'Site 2 (Secondary)',
                         type: 'area',
                         data: networkTrafficData.map(d => ({ x: d.x, y: d.y2 })),
-                        color: '#C33D69',
+                        color: '#ec7211',
                       },
                       {
-                        title: 'Performance goal',
+                        title: 'Performance threshold',
                         type: 'threshold',
                         y: 45000,
-                        color: '#5F6B7A',
+                        color: '#d13212',
                       },
                     ]}
-                    xScaleType="categorical"
-                    yTitle="Network traffic"
-                    xTitle="Day"
+                    xScaleType="time"
+                    yTitle="Data transferred (Mbps)"
+                    xTitle="Time (UTC)"
                     height={300}
-                    hideFilter
+                    hideFilter={false}
                     hideLegend={false}
                     ariaLabel="Network traffic chart"
                     empty={
                       <Box textAlign="center" color="inherit">
                         <b>No data available</b>
                         <Box variant="p" color="inherit">
-                          There is no data available
+                          There is no data available for the selected period
                         </Box>
                       </Box>
                     }
                     i18nStrings={{
-                      filterLabel: 'Filter displayed data',
-                      filterPlaceholder: 'Filter data',
+                      filterLabel: 'Filter displayed sites',
+                      filterPlaceholder: 'Filter sites',
                       legendAriaLabel: 'Legend',
                       chartAriaRoleDescription: 'area chart',
-                      yTickFormatter: value => `y${Math.floor(value / 10000)}`,
+                      yTickFormatter: value => `${(value / 1000).toFixed(1)}k`,
+                      xTickFormatter: date =>
+                        date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
                     }}
                   />
                 </Container>
