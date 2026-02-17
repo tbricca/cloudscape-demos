@@ -240,7 +240,29 @@ export default function Home() {
   );
 
   return (
-    <AppLayout
+    <>
+      <style>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-content {
+          animation: fadeInUp 0.8s ease-out forwards;
+        }
+        .animate-hero-image {
+          transition: transform 0.3s ease-in-out;
+        }
+        .animate-hero-image:hover {
+          transform: scale(1.02);
+        }
+      `}</style>
+      <AppLayout
       navigationHide
       toolsHide
       content={
@@ -283,6 +305,7 @@ export default function Home() {
                     <img
                       src="https://cdn.builder.io/api/v1/image/assets%2Fc5b47d20f6a943e485717e5895739988%2F6756eeeef8ab4c40a5a532cd42c054cf"
                       alt="Analytics dashboard visualization"
+                      className="animate-hero-image"
                       style={{
                         width: '100%',
                         height: 'auto',
@@ -299,7 +322,8 @@ export default function Home() {
             </SpaceBetween>
           }
         >
-          <SpaceBetween size="l">
+          <div className="animate-content">
+            <SpaceBetween size="l">
             <Container>
               <Box variant="h2">Application Catalog</Box>
               <Box variant="p" padding={{ bottom: 'm' }}>
@@ -398,8 +422,10 @@ export default function Home() {
               }}
             />
           </SpaceBetween>
+          </div>
         </ContentLayout>
       }
     />
+    </>
   );
 }
