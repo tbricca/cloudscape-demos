@@ -19,6 +19,10 @@ import Flashbar from '@cloudscape-design/components/flashbar';
 import TopNavigation from '@cloudscape-design/components/top-navigation';
 
 // Sample data for the charts
+/**
+ * Generates sample time-series data for the network traffic chart.
+ * It produces a data point for each hour in the last 24 hours.
+ */
 const generateNetworkTrafficData = () => {
   const data = [];
   const now = new Date();
@@ -38,6 +42,9 @@ const generateNetworkTrafficData = () => {
 
 const networkTrafficData = generateNetworkTrafficData();
 
+/**
+ * Static sample data for the credit usage bar chart.
+ */
 const creditUsageData = [
   { x: 'x1', y: 42000 },
   { x: 'x2', y: 55000 },
@@ -46,7 +53,9 @@ const creditUsageData = [
   { x: 'x5', y: 50000 },
 ];
 
-// Sample table data
+/**
+ * Utility function to generate mock device data for the table.
+ */
 const generateDeviceData = () => {
   const devices = [];
   for (let i = 1; i <= 12; i++) {
@@ -65,10 +74,18 @@ const generateDeviceData = () => {
   return devices;
 };
 
+/**
+ * Main application component for the Network Administration Dashboard.
+ * Handles layout, state for interactive elements, and rendering of widgets.
+ */
 export function App() {
+  // Track selected items in the devices table
   const [selectedItems, setSelectedItems] = useState([]);
+  // Search filter for the device table
   const [filteringText, setFilteringText] = useState('');
+  // Current page for pagination
   const [currentPageIndex, setCurrentPageIndex] = useState(1);
+  // Notifications displayed in the Flashbar
   const [flashbarItems, setFlashbarItems] = useState([
     {
       type: 'warning' as const,
@@ -84,6 +101,7 @@ export function App() {
 
   return (
     <>
+      {/* Top navigation containing logo and user profile utilities */}
       <TopNavigation
         identity={{
           href: '#',
@@ -136,9 +154,11 @@ export function App() {
         }}
       />
 
+      {/* Main app layout wrapper with navigation and notification settings */}
       <AppLayout
         navigationHide
         toolsHide
+        // Breadcrumb navigation items
         breadcrumbs={
           <BreadcrumbGroup
             items={[
@@ -148,9 +168,11 @@ export function App() {
             ariaLabel="Breadcrumbs"
           />
         }
+        // Notification messages section
         notifications={<Flashbar items={flashbarItems} />}
         content={
           <SpaceBetween size="l">
+            {/* Page header with title and refresh action */}
             <Header
               variant="h1"
               description="Network Traffic, Credit Usage, and Your Devices"
@@ -164,8 +186,9 @@ export function App() {
             </Header>
 
             <SpaceBetween size="l">
+              {/* Grid layout for displaying summary charts */}
               <Grid gridDefinition={[{ colspan: 6 }, { colspan: 6 }]}>
-                {/* Network Traffic Chart */}
+                {/* Visualizes network traffic over time for different sites */}
                 <Container>
                   <Box variant="h2" padding={{ bottom: 's' }}>
                     Network traffic
@@ -218,7 +241,7 @@ export function App() {
                   />
                 </Container>
 
-                {/* Credit Usage Chart */}
+                {/* Displays credit usage categories in a bar chart format */}
                 <Container>
                   <Box variant="h2" padding={{ bottom: 's' }}>
                     Credit Usage
@@ -264,7 +287,7 @@ export function App() {
                 </Container>
               </Grid>
 
-              {/* My Devices Table */}
+              {/* Table listing network devices with sorting and selection capabilities */}
               <Table
                 header={
                   <Header
@@ -279,6 +302,7 @@ export function App() {
                     My Devices
                   </Header>
                 }
+                // Mapping of data fields to table columns
                 columnDefinitions={[
                   {
                     id: 'column1',
@@ -337,6 +361,7 @@ export function App() {
                     <Button>Add device</Button>
                   </Box>
                 }
+                // Search functionality for the table
                 filter={
                   <TextFilter
                     filteringText={filteringText}
@@ -345,6 +370,7 @@ export function App() {
                     onChange={({ detail }) => setFilteringText(detail.filteringText)}
                   />
                 }
+                // Pagination controls for navigating through table records
                 pagination={
                   <Pagination
                     currentPageIndex={currentPageIndex}
