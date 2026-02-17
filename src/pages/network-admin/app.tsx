@@ -1,0 +1,393 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: MIT-0
+import React, { useState } from 'react';
+
+import AppLayout from '@cloudscape-design/components/app-layout';
+import BreadcrumbGroup from '@cloudscape-design/components/breadcrumb-group';
+import Button from '@cloudscape-design/components/button';
+import Header from '@cloudscape-design/components/header';
+import SpaceBetween from '@cloudscape-design/components/space-between';
+import Grid from '@cloudscape-design/components/grid';
+import Container from '@cloudscape-design/components/container';
+import AreaChart from '@cloudscape-design/components/area-chart';
+import BarChart from '@cloudscape-design/components/bar-chart';
+import Table from '@cloudscape-design/components/table';
+import Box from '@cloudscape-design/components/box';
+import TextFilter from '@cloudscape-design/components/text-filter';
+import Pagination from '@cloudscape-design/components/pagination';
+import Flashbar from '@cloudscape-design/components/flashbar';
+import TopNavigation from '@cloudscape-design/components/top-navigation';
+
+// Sample data for the charts
+/**
+ * Generates sample time-series data for the network traffic chart.
+ * It produces a data point for each hour in the last 24 hours.
+ */
+const generateNetworkTrafficData = () => {
+  const data = [];
+  const now = new Date();
+  for (let i = 24; i >= 0; i--) {
+    const time = new Date(now.getTime() - i * 60 * 60 * 1000);
+    // Base values with some randomness for "detail"
+    const base1 = 40000 + Math.sin(i / 3) * 10000;
+    const base2 = 35000 + Math.cos(i / 2) * 8000;
+    data.push({
+      x: time,
+      y1: base1 + Math.random() * 5000,
+      y2: base2 + Math.random() * 4000,
+    });
+  }
+  return data;
+};
+
+const networkTrafficData = generateNetworkTrafficData();
+
+/**
+ * Static sample data for the credit usage bar chart.
+ */
+const creditUsageData = [
+  { x: 'x1', y: 42000 },
+  { x: 'x2', y: 55000 },
+  { x: 'x3', y: 48000 },
+  { x: 'x4', y: 32000 },
+  { x: 'x5', y: 50000 },
+];
+
+/**
+ * Utility function to generate mock device data for the table.
+ */
+const generateDeviceData = () => {
+  const devices = [];
+  for (let i = 1; i <= 12; i++) {
+    devices.push({
+      id: i,
+      selected: false,
+      column1: 'Cell Value',
+      column2: 'Cell Value',
+      column3: 'Cell Value',
+      column4: 'Cell Value',
+      column5: 'Cell Value',
+      column6: 'Cell Value',
+      column7: 'Cell Value',
+    });
+  }
+  return devices;
+};
+
+/**
+ * Main application component for the Network Administration Dashboard.
+ * Handles layout, state for interactive elements, and rendering of widgets.
+ */
+export function App() {
+  // Track selected items in the devices table
+  const [selectedItems, setSelectedItems] = useState([]);
+  // Search filter for the device table
+  const [filteringText, setFilteringText] = useState('');
+  // Current page for pagination
+  const [currentPageIndex, setCurrentPageIndex] = useState(1);
+  // Notifications displayed in the Flashbar
+  const [flashbarItems, setFlashbarItems] = useState([
+    {
+      type: 'warning' as const,
+      content: 'This is a warning message',
+      dismissible: true,
+      dismissLabel: 'Dismiss message',
+      onDismiss: () => setFlashbarItems([]),
+      id: 'warning_message',
+    },
+  ]);
+
+  const devices = generateDeviceData();
+
+  return (
+    <>
+      {/* Top navigation containing logo and user profile utilities */}
+      <TopNavigation
+        identity={{
+          href: '#',
+          title: 'Service name',
+          logo: {
+            src: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"%3E%3Crect width="40" height="40" fill="%23232f3e"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="sans-serif" font-size="14"%3ELogo%3C/text%3E%3C/svg%3E',
+            alt: 'Service Logo',
+          },
+        }}
+        utilities={[
+          {
+            type: 'button',
+            text: 'Link',
+            href: 'https://example.com',
+            external: true,
+            externalIconAriaLabel: ' (opens in a new tab)',
+          },
+          {
+            type: 'button',
+            iconName: 'notification',
+            title: 'Notifications',
+            ariaLabel: 'Notifications (unread)',
+            badge: true,
+            disableUtilityCollapse: false,
+          },
+          {
+            type: 'button',
+            iconName: 'settings',
+            title: 'Settings',
+            ariaLabel: 'Settings',
+          },
+          {
+            type: 'menu-dropdown',
+            iconName: 'user-profile',
+            text: 'Customer name',
+            items: [
+              { id: 'profile', text: 'Profile' },
+              { id: 'preferences', text: 'Preferences' },
+              { id: 'signout', text: 'Sign out' },
+            ],
+          },
+        ]}
+        i18nStrings={{
+          searchIconAriaLabel: 'Search',
+          searchDismissIconAriaLabel: 'Close search',
+          overflowMenuTriggerText: 'More',
+          overflowMenuTitleText: 'All',
+          overflowMenuBackIconAriaLabel: 'Back',
+          overflowMenuDismissIconAriaLabel: 'Close menu',
+        }}
+      />
+
+      {/* Main app layout wrapper with navigation and notification settings */}
+      <AppLayout
+        navigationHide
+        toolsHide
+        // Breadcrumb navigation items
+        breadcrumbs={
+          <BreadcrumbGroup
+            items={[
+              { text: 'Service', href: '#' },
+              { text: 'Administrative Dashboard', href: '#' },
+            ]}
+            ariaLabel="Breadcrumbs"
+          />
+        }
+        // Notification messages section
+        notifications={<Flashbar items={flashbarItems} />}
+        content={
+          <SpaceBetween size="l">
+            {/* Page header with title and refresh action */}
+            <Header
+              variant="h1"
+              description="Network Traffic, Credit Usage, and Your Devices"
+              actions={
+                <Button variant="primary" iconName="external" iconAlign="right" href="#">
+                  Refresh Data
+                </Button>
+              }
+            >
+              Network Adminstration Dashboard
+            </Header>
+
+            <SpaceBetween size="l">
+              {/* Grid layout for displaying summary charts */}
+              <Grid gridDefinition={[{ colspan: 6 }, { colspan: 6 }]}>
+                {/* Visualizes network traffic over time for different sites */}
+                <Container>
+                  <Box variant="h2" padding={{ bottom: 's' }}>
+                    Network traffic
+                  </Box>
+                  <AreaChart
+                    series={[
+                      {
+                        title: 'Site 1 (Primary)',
+                        type: 'area',
+                        data: networkTrafficData.map(d => ({ x: d.x, y: d.y1 })),
+                        color: '#0972d3',
+                      },
+                      {
+                        title: 'Site 2 (Secondary)',
+                        type: 'area',
+                        data: networkTrafficData.map(d => ({ x: d.x, y: d.y2 })),
+                        color: '#ec7211',
+                      },
+                      {
+                        title: 'Performance threshold',
+                        type: 'threshold',
+                        y: 45000,
+                        color: '#d13212',
+                      },
+                    ]}
+                    xScaleType="time"
+                    yTitle="Data transferred (Mbps)"
+                    xTitle="Time (UTC)"
+                    height={300}
+                    hideFilter={false}
+                    hideLegend={false}
+                    ariaLabel="Network traffic chart"
+                    empty={
+                      <Box textAlign="center" color="inherit">
+                        <b>No data available</b>
+                        <Box variant="p" color="inherit">
+                          There is no data available for the selected period
+                        </Box>
+                      </Box>
+                    }
+                    i18nStrings={{
+                      filterLabel: 'Filter displayed sites',
+                      filterPlaceholder: 'Filter sites',
+                      legendAriaLabel: 'Legend',
+                      chartAriaRoleDescription: 'area chart',
+                      yTickFormatter: value => `${(value / 1000).toFixed(1)}k`,
+                      xTickFormatter: date =>
+                        date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                    }}
+                  />
+                </Container>
+
+                {/* Displays credit usage categories in a bar chart format */}
+                <Container>
+                  <Box variant="h2" padding={{ bottom: 's' }}>
+                    Credit Usage
+                  </Box>
+                  <BarChart
+                    series={[
+                      {
+                        title: 'Site 1',
+                        type: 'bar',
+                        data: creditUsageData,
+                        color: '#688AE8',
+                      },
+                      {
+                        title: 'Performance goal',
+                        type: 'threshold',
+                        y: 45000,
+                        color: '#5F6B7A',
+                      },
+                    ]}
+                    xScaleType="categorical"
+                    yTitle="Credit usage"
+                    xTitle="Day"
+                    height={300}
+                    hideFilter
+                    hideLegend={false}
+                    ariaLabel="Credit usage chart"
+                    empty={
+                      <Box textAlign="center" color="inherit">
+                        <b>No data available</b>
+                        <Box variant="p" color="inherit">
+                          There is no data available
+                        </Box>
+                      </Box>
+                    }
+                    i18nStrings={{
+                      filterLabel: 'Filter displayed data',
+                      filterPlaceholder: 'Filter data',
+                      legendAriaLabel: 'Legend',
+                      chartAriaRoleDescription: 'bar chart',
+                      yTickFormatter: value => `y${Math.floor(value / 10000)}`,
+                    }}
+                  />
+                </Container>
+              </Grid>
+
+              {/* Table listing network devices with sorting and selection capabilities */}
+              <Table
+                header={
+                  <Header
+                    variant="h2"
+                    description="Devices on your local network"
+                    actions={
+                      <Button variant="primary" iconName="external" iconAlign="right">
+                        Add Device
+                      </Button>
+                    }
+                  >
+                    My Devices
+                  </Header>
+                }
+                // Mapping of data fields to table columns
+                columnDefinitions={[
+                  {
+                    id: 'column1',
+                    header: 'Column header',
+                    cell: item => item.column1,
+                    sortingField: 'column1',
+                  },
+                  {
+                    id: 'column2',
+                    header: 'Column header',
+                    cell: item => item.column2,
+                    sortingField: 'column2',
+                  },
+                  {
+                    id: 'column3',
+                    header: 'Column header',
+                    cell: item => item.column3,
+                    sortingField: 'column3',
+                  },
+                  {
+                    id: 'column4',
+                    header: 'Column header',
+                    cell: item => item.column4,
+                    sortingField: 'column4',
+                  },
+                  {
+                    id: 'column5',
+                    header: 'Column header',
+                    cell: item => item.column5,
+                    sortingField: 'column5',
+                  },
+                  {
+                    id: 'column6',
+                    header: 'Column header',
+                    cell: item => item.column6,
+                    sortingField: 'column6',
+                  },
+                  {
+                    id: 'column7',
+                    header: 'Column header',
+                    cell: item => item.column7,
+                    sortingField: 'column7',
+                  },
+                ]}
+                items={devices}
+                loadingText="Loading devices"
+                selectionType="multi"
+                selectedItems={selectedItems}
+                onSelectionChange={({ detail }) => setSelectedItems(detail.selectedItems)}
+                trackBy="id"
+                empty={
+                  <Box textAlign="center" color="inherit">
+                    <Box padding={{ bottom: 's' }} variant="p" color="inherit">
+                      <b>No devices</b>
+                    </Box>
+                    <Button>Add device</Button>
+                  </Box>
+                }
+                // Search functionality for the table
+                filter={
+                  <TextFilter
+                    filteringText={filteringText}
+                    filteringPlaceholder="Placeholder"
+                    filteringAriaLabel="Filter devices"
+                    onChange={({ detail }) => setFilteringText(detail.filteringText)}
+                  />
+                }
+                // Pagination controls for navigating through table records
+                pagination={
+                  <Pagination
+                    currentPageIndex={currentPageIndex}
+                    onChange={({ detail }) => setCurrentPageIndex(detail.currentPageIndex)}
+                    pagesCount={3}
+                    ariaLabels={{
+                      nextPageLabel: 'Next page',
+                      previousPageLabel: 'Previous page',
+                      pageLabel: pageNumber => `Page ${pageNumber} of all pages`,
+                    }}
+                  />
+                }
+              />
+            </SpaceBetween>
+          </SpaceBetween>
+        }
+      />
+    </>
+  );
+}
