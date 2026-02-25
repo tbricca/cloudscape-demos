@@ -40,6 +40,12 @@ const dashboards = [
     category: 'Dashboards',
   },
   {
+    route: '/network-admin-dashboard',
+    title: 'Network Administration Dashboard',
+    description: 'Network traffic, credit usage, and device management.',
+    category: 'Dashboards',
+  },
+  {
     route: '/dashboard',
     title: 'Service Dashboard',
     description: 'Operational service monitoring and metrics overview.',
