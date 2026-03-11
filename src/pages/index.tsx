@@ -203,6 +203,12 @@ const dashboards = [
   },
   { route: '/wizard', title: 'Setup Wizard', description: 'Multi-step configuration wizard.', category: 'Forms' },
   {
+    route: '/workflow',
+    title: 'Workflow Management',
+    description: 'Submit requests and manage approvals for workflow processes.',
+    category: 'Applications',
+  },
+  {
     route: '/write-to-s3',
     title: 'S3 Data Writer',
     description: 'Amazon S3 data upload and storage.',
